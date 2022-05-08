@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.LessonRequestMapper">
+    <insert id="lessonInsert">
+       insert into lessonrequest(uid, nick, lesson_classification, lesson_goal, lesson_method, age, 
+       gender, wish_gender, wish_date, wish_time, wish_local1, wish_local2, lesson_place, detailed_matters)
+       
+	   values(#{uid}, #{nick}, #{lesson_classification}, #{lesson_goal}, #{lesson_method}, 
+	   #{age}, #{gender}, #{wish_gender}, #{wish_date}, #{wish_time}, #{wish_local1}, 
+	   #{wish_local2}, #{lesson_place}, #{detailed_matters})
+    </insert>
+    
+    <select id="lessonList" resultType="com.example.domain.LessonRequestVO">
+    	select * from lessonrequest where isDelete=0 order by lrno desc
+    </select>
+    
+    <select id="lessonRead" resultType="com.example.domain.LessonRequestVO">
+   		select * from lessonrequest where lrno=#{lrno}
+   	</select>
+</mapper>
