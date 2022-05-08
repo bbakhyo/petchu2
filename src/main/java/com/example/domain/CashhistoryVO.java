@@ -1,7 +1,7 @@
 package com.example.domain;
 
-public class PointhistoryVO{
-	private int phno;
+public class CashhistoryVO{
+	private int chno;
 	private String id;
 	private int amount;
 	private String content;
@@ -14,11 +14,12 @@ public class PointhistoryVO{
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
-	public int getPhno() {
-		return phno;
+	
+	public int getChno() {
+		return chno;
 	}
-	public void setPhno(int phno) {
-		this.phno = phno;
+	public void setChno(int chno) {
+		this.chno = chno;
 	}
 	public String getId() {
 		return id;
@@ -40,7 +41,7 @@ public class PointhistoryVO{
 	}
 	@Override
 	public String toString() {
-		return "PointhistoryVO [phno=" + phno + ", id=" + id + ", amount=" + amount + ", content=" + content + "]";
+		return "PointhistoryVO [chno=" + chno + ", id=" + id + ", amount=" + amount + ", content=" + content + "]";
 	}
 	
 }

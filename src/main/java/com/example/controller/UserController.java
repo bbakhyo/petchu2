@@ -25,10 +25,12 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.example.dao.CashhistoryDAO;
 import com.example.dao.DoctorDAO;
 import com.example.dao.PetDAO;
 import com.example.dao.PointhistoryDAO;
 import com.example.dao.UserDAO;
+import com.example.domain.CashhistoryVO;
 import com.example.domain.DoctorVO;
 import com.example.domain.KakaoProfile;
 import com.example.domain.OAuth_Token;
@@ -261,9 +263,6 @@ public class UserController {
 					session.setAttribute("id", id);
 					session.setAttribute("nick", vo.getNick());
 					session.setAttribute("type", vo.getType());
-					session.setAttribute("address", vo.getAddress1());
-					session.setAttribute("email", vo.getEmail());
-					session.setAttribute("zipcode", vo.getZipcode());
 				}
 
 			} else {
@@ -305,12 +304,28 @@ public class UserController {
 		dao.updatePoint(amount, session.getAttribute("id").toString());
 		phdao.insertPH(vo);
 	}
+	
+	@Autowired
+	CashhistoryDAO chdao;
+	
+	@ResponseBody
+	@RequestMapping(value="/updatecash", method=RequestMethod.POST)
+	public void updateCash(int amount, HttpSession session){
+		CashhistoryVO vo = new CashhistoryVO();
+		vo.setId(session.getAttribute("id").toString());
+		vo.setAmount(amount);
+		vo.setContent("캐쉬 충전");
+		dao.updateCash(amount, session.getAttribute("id").toString());
+		chdao.insertCH(vo);
+	}
 
 	
 	@RequestMapping(value="/pointRead")
 	public String pointRead(Model model, HttpSession session){
 		model.addAttribute("point",dao.pointRead(session.getAttribute("id").toString()));
-		model.addAttribute("history",phdao.readPH(session.getAttribute("id").toString()));
+		model.addAttribute("cash", dao.cashRead(session.getAttribute("id").toString()));
+		model.addAttribute("pointhistory",phdao.readPH(session.getAttribute("id").toString()));
+		model.addAttribute("cashhistory",chdao.readCH(session.getAttribute("id").toString()));
 		model.addAttribute("pageName", "user/point.jsp");
 		return "/home";
 	}

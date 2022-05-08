@@ -22,4 +22,8 @@ public interface UserDAO {
 	public int pointRead(String id);
 	
 	public String typechk(String id);
+	
+	public int cashRead(String id);
+	
+	public void updateCash(int amount, String id);
 }
