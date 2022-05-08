@@ -93,13 +93,12 @@ display: block;
 
 
 /* 매뉴 페이저 : 강아지/고양이  */
-.select[type="radio"]:checked+label {
+[type="radio"]:checked+label {
 	border-bottom:3px solid #A7CA37;
-	/* background-color: #A7CA37; */
+/* 	background-color: #A7CA37;  */
 	color: white;
 	
 	
-	/* border: 1px solid red; */
 }
 /*메뉴 : 강아지/공양이 선택 포인터 */
 .select {
@@ -208,17 +207,7 @@ ul.sub_menu_cat>li {
   flex-wrap: wrap;
   margin-bottom: 30px;
 }
-/* .best_container_bottom{
-  width: 960px;
-  height: 300px;
-  display: flex;
-  justify-content: space-between;;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: initial;
-  margin-bottom: 30px;
- 
-} */
+
 .best_item_box{
   display: flex;
   flex-direction: column;
@@ -273,49 +262,6 @@ img.best_icon{
   display: flex;
   
 }
-/* 작은 버전 */
-.best_item_box_small{
-  display: flex;
-  flex-direction: column;
-  font-family: "nanum gothic"; 
-  width: 203px;
-  height: 250px;
-/*   background-color: #d8d5d5;  */
-}
-.best_item_box_small:hover{
-  filter: brightness(50%);
-}
-.best_item_img_small{
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 200px;
-/*   border: 1px solid black; */
-}
-.best_icon_small{
-  position: relative;
-  top: 0;
-  left: 0;
-}
-.best_item_content_small{
-  height: 50px;
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-.best_item_title_small{
- width: 200px;
-  font-size: 14px;
-  overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-.best_item_price_small{
-  font-size: 12px;
-  display: flex;
-}
 
 /* 배너 규격 */
 .banner_box{
@@ -330,33 +276,33 @@ display: flex;
 	<div class="page">
 		<div class="banner" style="display: flex; justify-content:center;">
 			<img src="https://via.placeholder.com/960x200/d3d3d3">
-			<!-- <img src="https://via.placeholder.com/1800x1200/d3d3d3"> -->
-
 		</div>
 
-<!-- 주 카타고리 -->
+			<!-- 주 카타고리 -->
 		<div class="categoryBody">
 			<div class="category_select">
 				
-				<!-- 공양이 -->
+				<!-- 1. 공양이 -->
 				<div class="category_cat select">
-					<input type="radio" name="animal" value="고양이" id="cat" class="select"> <label for="cat"><img
-						src="/resources/icon_menu/select_cat.png" class="select"></label>
+					<input type="radio" name="animal" value="고양이" id="cat"><label
+						for="cat"><img
+						src="/resources/icon_menu/content_select_cat.png"
+						style="margin-right: 20px;"></label>
 				</div>
-				
-				<!--메뉴 간격-->
+
+				<!--메뉴 간격(space)-->
 				<div>
 					<span><img
 						src="/resources/icon_menu/content_select_middle_icon.png"
-						style="width: 37px; height: 97px; position: relative; top: 28px;"></span>
+						style="width: 37px; height: 97px; position: relative; top: 15px"></span>
 				</div>
-				
-				<!-- 강아지 -->
-				<div class="category_dog select">
-					<input type="radio" name="animal" value="강아지" id="dog"
-						class="select"><label for="dog"><img
-						src="/resources/icon_menu/select_dog.png" class="select"></label>
 
+				<!-- 2. 강아지 -->
+				<div class="category_dog select">
+					<input type="radio" name="animal" value="강아지" id="dog"><label
+						for="dog"><img
+						src="/resources/icon_menu/content_select_dog.png"
+						style="margin-left: 20px;"></label>
 				</div>
 			</div>
 			<hr style="width: 960px; margin-top: 20px; margin-bottom: 20px;" />
@@ -447,8 +393,8 @@ display: flex;
 					</ul>
 					<!-- -------------------------- -->
 					<ul class="category_list2 category_snack" selectCate2="간식">
-						<li class="category_item">
-							<div class="category_box">동결건조</div>
+						<li class="category_item">				
+						<div class="category_box">동결건조</div>
 						</li>
 						<li class="category_item">
 							<div class="category_box">수제간식</div>
@@ -462,13 +408,13 @@ display: flex;
 						<li class="category_item">
 							<div class="category_box">테스트 간식 카테고리5</div>
 						</li>
-						<!-- 	<li class="category_item">
+						<%-- <!-- 	<li class="category_item">
 							<div class="category_box">테스트 간식 카테고리6</div>
 						</li>
 						<li class="category_item">
-							<div class="category_box">테스트 간식 카테고리7</div>
+							<div class="category_box">테스트 간식 카테고리7</d<!-- iv>
 						</li>
-						<li class="category_item">
+						<li  -->class="category_item">
 							<div class="category_box">테스트 간식 카테고리8</div>
 						</li>
 						<li class="category_item">
@@ -485,7 +431,7 @@ display: flex;
 						</li>
 
 						<li class="category_item">
-							<div class="category_box">테스트 간식 카테고리13</div>
+							<div class="cate<!-- gory_box">테스트 간식 카테고리13</d -->iv>
 						</li>
 						<li class="category_item">
 							<div class="category_box">테스트 간식 카테고리14</div>
@@ -495,15 +441,14 @@ display: flex;
 						</li>
 						<li class="category_item">
 							<div class="category_box">테스트 간식 카테고리16</div>
-						</li> -->
+						</li> --> --%>
 					</ul>
 					<!-- -------------------------- -->
 					<ul class="category_list2 category_supplies" selectCate2="용품">
 						<li class="category_item">
 							<div class="category_box">모래</div>
 						</li>
-						<li class="category_item">
-							<div class="category_box">배변패드</div>
+						<li class="category_item">				<div class="category_box">배변패드</div>
 						</li>
 						<li class="category_item">
 							<div class="category_box">테스트 용품 카테고리3</div>
