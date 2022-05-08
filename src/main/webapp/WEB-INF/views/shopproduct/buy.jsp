@@ -126,7 +126,7 @@
               <div class="checkout_total_card_line1">
 
                 <div class="card_cart_total_row_left">상품가격</div>
-                <div class="card_cart_total_row_right" style="float:right"><span class="items_price"></span>원</div>
+                <div class="card_cart_total_row_right" style="float:right"><span class="items_price format_number"></span>원</div>
               </div><br>
 
               <div class="checkout_total_card_line2">
@@ -137,7 +137,7 @@
               <hr class="transition">
 
               <div class="checkout_total_card_line3">
-                <div class="card_cart_grandtotal_row_left">총 결제금액<span class="item_type_amount"></span></div>
+                <div class="card_cart_grandtotal_row_left">총 결제금액<span class="item_type_amount">(3개)</span></div>
                 <span class="card_cart_grandtotal_row_right" style="font-size:1.2em">353,000원</span>
               </div>
 
@@ -391,7 +391,9 @@
 						var orno = Date.now() + uid;
 						var pno = $(".cartitem_info_right").attr("pno");
 						var amount = $(".cartitem_info_right").attr("amount");
-						var tel = card1.find("#delivery_contact").attr("tel");
+						var tel = card1.find("#delivery_contact").val();
+						//쉬는시간 이후 
+						//단일결제 생각해보기
 						
 							$.ajax({
 								type: "post",
@@ -443,18 +445,12 @@
 		var finalPrice = $(".card_cart_grandtotal_row_right").attr("final_price");
 		finalPrice=finalPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		$(".card_cart_grandtotal_row_right").html(finalPrice+"원");
-		
-		//.items_price amount 가격으로 포맷
-		var semifinalPrice = $(".items_price").html();
-		semifinalPrice=semifinalPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-		$(".items_price").html(semifinalPrice);
-		
 	}
 	
-	//전화번호 포멧//////////////여기부터 시작!!!!!!!!!!!!!!!!!! 멀티바이도 수정해야함
-	
-	var num = $(".buyer_phone").html();
+	//전화번호 포멧//////////////여기부터 시작!!!!!!!!!!!!!!!!!!
+	var num = $(".buyer_phone buyer").html();
 	var formatNum = '';
+	alert(num);
 	 if(num.length==11){
 	     formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
 	 }else if(num.length==8){
@@ -464,9 +460,7 @@
 	 }else{
 	     formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
 	 }
-	 $(".buyer_phone").html(formatNum);
-	 $("#delivery_contact").val(formatNum);
-	 $("#delivery_contact").attr("tel", num);
+	 $(".buyer_phone buyer").val(formatNum);
 	    
 	
 	

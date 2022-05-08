@@ -5,13 +5,13 @@
     <select id="list" resultType="com.example.domain.ReserveVO">
         select r.* , s.scname, s.sctel
 		from serviceco s , reserve r
-		where s.scno=r.scno and r.id=#{id} and checkin > now() and isDel != 2
+		where s.scno=r.scno and r.id=#{id} and checkin > now()
 		order by rno desc
     </select>
     <select id="oldlist" resultType="com.example.domain.ReserveVO">
         select r.* , s.scname, s.sctel
 		from serviceco s , reserve r
-		where (s.scno=r.scno and r.id=#{id} and checkin &lt; now()) or isDel = 2
+		where s.scno=r.scno and r.id=#{id} and checkin &lt; now()
 		order by rno desc
     </select>
     <insert id="insert">
@@ -45,37 +45,26 @@
 		<if test="keword != null">
 			and (scname like concat('%',#{keyword},'%')
 				or scaddress1 like concat('%',#{keyword},'%')
-				or tag like concat('%',#{keyword},'%'))
+				or tag like concat('%',#{keyword},'%'));
         </if>
            
     </select>
     <update id="updateReserve">
     	update reserve
-		set isEdit=#{isEdit}, isDel=#{isDel}, checkin=#{checkin}, checkout=#{checkout}, userName=#{userName}, userTel=#{userTel}, request=#{request}
-		where rno=#{rno}
-    </update>
-    <update id="ReserveEdit">
-    	update reserve
-		set isEdit=#{isEdit}, isDel=#{isDel}
-		where rno=#{rno}
+		set isEdit=#{isEdit}, checkin=#{checkin}, checkout=#{checkout}, userName=#{userName}, userTel=#{userTel}, request=#{request}
+		where rno=#{rno};
     </update>
     
     <select id="comList" resultType="com.example.domain.ReserveVO">
        	select r.* , s.scname
 		from serviceco s , reserve r
 		where s.scno=r.scno and isDelete=0 and s.id=#{id} and checkin > now()
-		and s.scname like concat('%',#{keyword},'%')
-
 		order by rno desc
     </select>
     <select id="comOldlist" resultType="com.example.domain.ReserveVO">
         select r.* , s.scname
 		from serviceco s , reserve r
 		where s.scno=r.scno and isDelete=0 and s.id=#{id} and checkin &lt; now()
-		and s.scname like concat('%',#{keyword},'%')
 		order by rno desc
-    </select>
-    <select id="myCompany" resultType="com.example.domain.ReserveVO">
-    	select * from serviceco where id=#{id} and isDelete=0;
     </select>
 </mapper>

@@ -82,10 +82,6 @@
    		display: none;
    		color:red;
    }
-   .hiddenbtn2{
-   		display: none;
-   		color:red;
-   }
 </style>
 <div id="page">
 	<div id="reserveList">
@@ -98,7 +94,7 @@
 			<script id="temp" type="text/x-handlebars-template">
 				{{#each list}}
 
-					<tbody class="list" isEdit="{{isEdit}}"  isDel="{{isDel}}">
+					<tbody class="list" isEdit="{{isEdit}}">
 						<tr>
 							<td>업체명</td>
 							<td><span class="scname">{{scname}}</span></td>
@@ -123,20 +119,8 @@
 							<td width=150 class="sctel">{{sctel}}</td>
 						</tr>
 						<tr>
-							<td class="EditMessage" colspan=4 style="border-left: hidden; border-right:hidden; text-align: right;">
-								<p class="msg">예약 변경 요청중입니다</p>
-							</td>
-							<td colspan=4 class="hiddenbtn" style="border-left: hidden; border-right:hidden; text-align: right;">
-								<button class="openPopup" rno={{rno}}>예약변경</button> &nbsp;
-								<button class="reserveCancel" rno={{rno}}>예약취소</button>
-							</td>
-							<td colspan=2 class="hiddenbtn2" style="border-left: hidden; border-right:hidden; text-align: right;">
-								<span class="msg">예약변경이 거절되었습니다.</span>
-							</td>
-							<td colspan=2 class="hiddenbtn2" style="border-left: hidden; border-right:hidden; text-align: right;">
-								<button class="btnYes" rno={{rno}}>확인</button> &nbsp;
-								<button class="reserveCancel" rno={{rno}}>예약취소</button>
-							</td>
+							<td colspan=4 class="EditMessage" style="border-left: hidden; border-right:hidden; text-align: right;">예약 변경 요청중입니다</td>
+							<td colspan=4 class="hiddenbtn" style="border-left: hidden; border-right:hidden; text-align: right;"><button class="openPopup" rno={{rno}}>변경하기</button> &nbsp;<button>취소하기</button></td>
 						</tr>
 						<tr>
 							<td colspan=4 style="border-left: hidden; border-right:hidden; text-align: right;"></td>
@@ -240,92 +224,91 @@
 	//모달팝업 생성
 	$(document).ready(function( $ ){     
 	$("#myreserve").on("click",".openPopup", function(event) {  //팝업오픈 버튼 누르면
-		$("#popup01").show();   //팝업 오픈
-		$("body").append('<div class="backon"></div>'); //뒷배경 생성
+	$("#popup01").show();   //팝업 오픈
+	$("body").append('<div class="backon"></div>'); //뒷배경 생성
+	
+	var rno = $(this).attr("rno");
+
+	$.ajax({
+		type: "get",
+		url: "/reserve/myReserve.json",
+		dataType:"json",
+		data: {rno:rno},
+		success: function(data){
+			var template = Handlebars.compile($("#temp3").html());
+			$("#popup01").html(template(data));
 		
-		var rno = $(this).attr("rno");
-	
-		$.ajax({
-			type: "get",
-			url: "/reserve/myReserve.json",
-			dataType:"json",
-			data: {rno:rno},
-			success: function(data){
-				var template = Handlebars.compile($("#temp3").html());
-				$("#popup01").html(template(data));
 			
-				
-				//전화번호 포멧
-				var num = $("#popup01").find(".num").html();
-	
-				var formatNum = '';
-			
-				if(num.length==11){
-				    formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-				}else if(num.length==8){
-				    formatNum = num.replace(/(\d{4})(\d{4})/, '$1-$2');
-				}else if(num.indexOf('02')==0){
-				    formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
-				}else{
-				    formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-				}
-				$("#popup01").find(".num").html(formatNum);
-					
-				//전체전화번호 
-				var userTel=$("#userTel").val();
-				//유저네임
-				var name= $("#userName").val();
-	
-				//전화번호 substring
-				var tel1=userTel.substring(0,3);
-				var tel2=userTel.substring(3,7);
-				var tel3=userTel.substring(7,11);
-				//substring 한 전화번호 출력
-				$("#userTel1").val(tel1);
-				$("#userTel2").val(tel2);
-				$("#userTel3").val(tel3);
-				
-				//체크박스가 변동된 경우
-				$("#userCheck").on("change", function(){
-					if($(this).is(":checked")){
-						$("#userName").val(name);
-						$("#userTel1").val(tel1);
-						$("#userTel2").val(tel2);
-						$("#userTel3").val(tel3);
-					}else{
-						$("#userName").val("");
-						$("#userTel1").val("");
-						$("#userTel2").val("");
-						$("#userTel3").val("");
-					}
-				});
-				//변경요청 버튼을 클릭한 경우
-				$("#button").on("click","#btnReserve", function(){
-					var checkin = $("#checkinDate").val();
-					var checkout = $("#checkoutDate").val();
-					var request = $("#request").val();
-					var userName = $("#userName").val();
-					var tel1=$("#userTel1").val();
-					var tel2=$("#userTel2").val();
-					var tel3=$("#userTel3").val();
-					var userTel = tel1 + tel2 + tel3;
-					var isEdit = 1;
-					var isDel = 0;
-					console.log("체크인: "+checkin + "\n" +"체크아웃: "+checkout + "\n" + "요청사항: "+request + "\n" +"예약자 : "+userName + "\n" +"예약자 연락처 : "+userTel + "rno"+ rno);
-					if(!confirm("수정요청 하시겠습니까?")) return;
-						$.ajax({
-							type:"post",
-							url: "/reserve/updateReserve",
-							data: {checkin:checkin, checkout:checkout, request:request, userName:userName, userTel:userTel, rno:rno, isEdit:isEdit, isDel:isDel},
-							success: function(){
-								if(!confirm("수정이 완료되었습니다. 수정내역을 확인하시겠습니까?")) return;
-								location.href="/reserve/myreserveList?id=${id}";
-							}
-						});
-				});
-				
+			//전화번호 포멧
+			var num = $("#popup01").find(".num").html();
+
+			var formatNum = '';
+		
+			if(num.length==11){
+			    formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+			}else if(num.length==8){
+			    formatNum = num.replace(/(\d{4})(\d{4})/, '$1-$2');
+			}else if(num.indexOf('02')==0){
+			    formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+			}else{
+			    formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
 			}
-		});
+			$("#popup01").find(".num").html(formatNum);
+				
+			//전체전화번호 
+			var userTel=$("#userTel").val();
+			//유저네임
+			var name= $("#userName").val();
+
+			//전화번호 substring
+			var tel1=userTel.substring(0,3);
+			var tel2=userTel.substring(3,7);
+			var tel3=userTel.substring(7,11);
+			//substring 한 전화번호 출력
+			$("#userTel1").val(tel1);
+			$("#userTel2").val(tel2);
+			$("#userTel3").val(tel3);
+			
+			//체크박스가 변동된 경우
+			$("#userCheck").on("change", function(){
+				if($(this).is(":checked")){
+					$("#userName").val(name);
+					$("#userTel1").val(tel1);
+					$("#userTel2").val(tel2);
+					$("#userTel3").val(tel3);
+				}else{
+					$("#userName").val("");
+					$("#userTel1").val("");
+					$("#userTel2").val("");
+					$("#userTel3").val("");
+				}
+			});
+			//변경요청 버튼을 클릭한 경우
+			$("#button").on("click","#btnReserve", function(){
+				var checkin = $("#checkinDate").val();
+				var checkout = $("#checkoutDate").val();
+				var request = $("#request").val();
+				var userName = $("#userName").val();
+				var tel1=$("#userTel1").val();
+				var tel2=$("#userTel2").val();
+				var tel3=$("#userTel3").val();
+				var userTel = tel1 + tel2 + tel3;
+				var isEdit = 1;
+				console.log("체크인: "+checkin + "\n" +"체크아웃: "+checkout + "\n" + "요청사항: "+request + "\n" +"예약자 : "+userName + "\n" +"예약자 연락처 : "+userTel + "rno"+ rno);
+				if(!confirm("수정요청 하시겠습니까?")) return;
+					$.ajax({
+						type:"post",
+						url: "/reserve/updateReserve",
+						data: {checkin:checkin, checkout:checkout, request:request, userName:userName, userTel:userTel, rno:rno, isEdit:isEdit},
+						success: function(){
+							if(!confirm("수정이 완료되었습니다. 수정내역을 확인하시겠습니까?")) return;
+							location.href="/reserve/myreserveList?id=${id}";
+						}
+						
+					});
+			});
+		}
+	});
 	});
 	//뒷배경 클릭시
 	$("body").on("click", function(event) { 
@@ -349,48 +332,21 @@
 	//예약리스트 클릭했을 때 토글
 	$("#tbl").on("click",".list", function(){
 		var isEdit = $(this).attr("isEdit");
-		var isDel = $(this).attr("isDel");
-		var target = $(this).find(".hiddenbtn");	//확인/취소버튼
-		var target2 = $(this).find(".EditMessage");	//메세지출력
-		var target3 = $(this).find(".EditMessage2");	//예약변경 거절시
-
-		if(isEdit==1){		//예약변경요청 한 경우
+		var target = $(this).find(".hiddenbtn");
+		var target2 = $(this).find(".EditMessage");
+		if(isEdit==1){
 			if(target2.css("display") == "none"){
 				target2.show();
 			}else {
 				target2.hide();
 			}
 			
-		}else if(isEdit == 0 && isDel == 0){	//평상시
+		}else {
 			if(target.css("display") == "none"){
 				target.show();
 			}else {
 				target.hide();
 			}
-		}else if(isDel == 1){	//취소요청 한 경우
-			if(target2.css("display") == "none"){
-				target2.show();
-				target2.html("취소 요청 중 입니다.")
-				alert("isDel이 1일때")
-			}else {
-				target2.hide();
-			}
-		}else if(isEdit ==2){	//예약변경 거절시
-			if(target3.css("display") == "none"){
-				target3.show();
-			}else {
-				target3.hide();
-
-			}
-		}else if(isDel==2){		//예약변경요청 한 경우
-			if(target2.css("display") == "none"){
-				
-				target2.find(".msg").html("예약이 취소되었습니다.");
-				target2.show();
-			}else {
-				target2.hide();
-			}
-			
 		}
 	});
 		
@@ -446,27 +402,6 @@
 					}
 						$(this).find(".sctel").html(formatNum);
 						$(this).find(".userTel").html(formatTel);
-						
-						//취소요청 버튼을 클릭한 경우
-						$("#tbl").on("click",".reserveCancel", function(){
-							var isEdit = $(this).closest(".list").attr("isEdit");
-							var isDel = $(this).closest(".list").attr("isDel");
-							var rno = $(this).attr("rno");
-							alert(isEdit+"/"+ isDel+"/"+rno)
-							if(!confirm("예약을 취소하시겠습니까?")) return;
-							isEdit = 0;
-							isDel = 1;
-							$.ajax({
-								type: "post",
-								url: "/reserve/ReserveEdit",
-								data: {isEdit:isEdit, isDel:isDel, rno:rno},
-								success: function(){
-									if(!confirm("취소요청이 완료되었습니다. 내역을 확인하시겠습니까?")) return;
-									location.href="/reserve/myreserveList?id=${id}";
-									
-								}
-							});
-						});
 				});
 			}
 		});

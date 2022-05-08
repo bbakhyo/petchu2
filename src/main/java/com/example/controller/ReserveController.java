@@ -75,13 +75,8 @@ public class ReserveController {
 	@RequestMapping(value="/updateReserve", method=RequestMethod.POST)
 	@ResponseBody
 	public void updateReserve(ReserveVO vo){
+		System.out.println("................................컨트롤러 vo: "+vo);
 		dao.updateReserve(vo);
-
-	}
-	@RequestMapping(value="/ReserveEdit", method=RequestMethod.POST)
-	@ResponseBody
-	public void ReserveEdit(ReserveVO vo){
-		dao.ReserveEdit(vo);
 
 	}
 	@RequestMapping("/comReserveList")
@@ -92,12 +87,11 @@ public class ReserveController {
 	}
 	@RequestMapping("/comReserveList.json")
 	@ResponseBody
-	public HashMap<String, Object> comOldReserveList(String id, String keyword){
+	public HashMap<String, Object> comOldReserveList(String id){
 		HashMap<String, Object> map = new HashMap<>();
 		
-		map.put("company", dao.myCompany(id));
-		map.put("list", dao.comList(id,keyword));
-		map.put("oldlist", dao.comOldlist(id,keyword));
+		map.put("list", dao.comList(id));
+		map.put("oldlist", dao.comOldlist(id));
 		return map;
 	}
 }

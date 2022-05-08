@@ -53,27 +53,13 @@ public class ReserveDAOImpl implements ReserveDAO{
 	}
 
 	@Override
-	public List<ReserveVO> comList(String id, String keyword) {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("keyword", keyword);
-		return session.selectList(namespace + ".comList", map);
+	public List<ReserveVO> comList(String id) {
+		return session.selectList(namespace + ".comList", id);
 	}
 
 	@Override
-	public List<ReserveVO> comOldlist(String id, String keyword) {
+	public List<ReserveVO> comOldlist(String id) {
 		return session.selectList(namespace + ".comOldlist", id);
-	}
-
-	@Override
-	public List<ReserveVO> myCompany(String id) {
-		return session.selectList(namespace + ".myCompany", id);
-	}
-
-	@Override
-	public void ReserveEdit(ReserveVO vo) {
-		session.update(namespace + ".ReserveEdit", vo);
-		
 	}
 
 

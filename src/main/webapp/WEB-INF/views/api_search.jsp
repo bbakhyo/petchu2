@@ -14,7 +14,21 @@
 		검색수: <span id="count"></span> 건
 	</form>
 	
-	<div style="margin:20px;">
+	<!-- Nº of items per page form -->
+	<form id="display_number">
+	    <label id="display_label">items per page: </label>
+	    <select>
+	        <option>20</option>
+	        <option>30</option>
+	        <option>50</option>
+	        <option>100</option>
+	    </select>
+	</form>
+
+<!-- navigation holder -->
+<div class="holder">
+</div>
+	<div id="api_checkbox" style="margin:20px;">
 		<input type='checkbox' name='prd' value='selectall' onclick='selectAll(this)'/><b>전부선택</b><button style="margin-left:20px;" class="btnins">선택상품저장</button>
 	</div>
 	
@@ -45,22 +59,6 @@
 	
 	</div>
  </div>
- 
- <nav aria-label="...">
-  <ul class="pagination">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item active">
-      <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
-  </ul>
-</nav>
 
 <script>
 	Handlebars.registerHelper("display", function(lprice) {
@@ -78,9 +76,13 @@
 var query="강아지 사료";
 var page=1;
 var display=50;
-
- 
 getList();
+
+//페이지 당 아이템 display
+$("select").on("change",function(){
+	display=parseInt($(this).val() );
+	getList();
+});
 
 //Button:Prev
 $("#prev").on("click",function(){
@@ -100,6 +102,9 @@ $(frm).on("submit", function(e) {
 	query = $(frm.query).val();
 	getList();
 });
+
+
+
 
 //List. API Search
 function getList() {
@@ -159,13 +164,13 @@ function getList() {
 		}
 	
 	//Insert Product
-	$("#api_div").on("click", ".btnins", function() {
+	$("#api_checkbox").on("click", ".btnins", function() {
 		if (!confirm("선택한 상품들을 저장 하실래요?"))
 			return;
 	
 		$("#api_div .api_box .chk:checked").each(function() {
 			var row = $(this).parent().parent();
-			var pname = row.find(".title").html();
+			var orgText = row.find(".title").html();
 			var pprice = row.find(".price").html();
 			var pmaker = row.find(".maker").html();
 			var pbrand = row.find(".brand").html();
@@ -174,8 +179,10 @@ function getList() {
 			var pcate3 = row.find(".category3").html();
 	 		var pcate4 = row.find(".category3").attr("category4"); 
 			var pimage = row.find(".image").attr('src');
-			
-			var intPrice = parseInt(pprice.split(',').join(''));
+			//태그 제거
+			var pname = orgText .replace(/(<([^>]+)>)/ig,"");
+			//숫자 '0' 짤림 방지 
+ 			var intPrice = parseInt(pprice.split(',').join(''));
 			var chk = document.querySelector(".chk");
 			$.ajax({
 				type : "post",

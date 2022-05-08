@@ -1,84 +1,133 @@
+<!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<style>
-	.cart_item_image img{
-		width:90px;
-		height:90px;	
-		cursor:pointer;
-	}
-	.select_quantity{
-	}
-	
-	.quantity-chg{
-	    display: block;
-	    width: 52px;
-	    height: 21px;
-	    padding-top: 1px;
-	    font-size: 11px;
-	    border: 1px solid #888;
-	    color: #111;
-	    background: #fff;
-	    text-align: center;
-	    letter-spacing: -1px;
-	    cursor:pointer;
-	}
-	
-	.quantity-text{
-		width:45px;
-    	font-size: 12px;
-    	line-height: 24px;
-   	    margin: 0;
-	    padding: 0;
-	    color: #111;
-	}
-	.none{
-		display:none;
-	}
-</style>
+   pageEncoding="UTF-8"%>
+<head>
+   <title>Cart</title>
+   <link href="/resources/temp_page.css" rel="stylesheet">
+   <link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+</head>
+<body>
 <div id="page">
-	<h1>장바구니</h1>
-	<table id="tbl"></table>
-	<script id="temp" type="text/x-handlebars-template">
-		<input type="checkbox" class="chkAll">
-		{{#each .}}
-			<div class="cart_box" id="cart_box">
-				<input type="checkbox" class="chk" chk={{chk}} cno={{cno}} pno = {{pno}} price={{pprice}} pname={{pname}} amount={{amount}}>
-				<div class="cart_item_image"><img src="{{pimage}}"></div>
-				<div class="cart_item_info"><p class="pay_p" price={{pprice}} amount={{amount}}>
-						{{pname}} | {{pprice}}원 |
-					<select class="select_quantity" data_quantity={{amount}}>
-						<option value="0" class="none">0</option>
-						<option vlue="1">1</option>
-						<option vlue="2">2</option>
-						<option vlue="3">3</option>
-						<option vlue="4">4</option>
-						<option vlue="5">5</option>
-						<option vlue="6">6</option>
-						<option vlue="7">7</option>
-						<option vlue="8">8</option>
-						<option vlue="9">9</option>
-						<option vlue="10">10</option>
-						<option vlue="10+">10+</option>
-					</select> 
-					<a class="select-text" style="display: none;">
-						<input type="text" class="quantity-text" maxlength="4">
-						<input type="button" class="quantity-chg" id="quantity-chg" value="수량변경" 
-							onclick='getSelect(this)'
-						>
-					</a>
- 					총합: <a class="sum">{{sum}}</a>원
-		</p></div>		
-			</div>
-		{{/each}}
-	</script>
-	<button id="cart_delete">삭제</button>
-	<button id="cart_buy">구매</button>		
-	<div class="cart_total_price">
-		<p>최종 구매금액: <a class="final_price"></a>원</p>
-	<!--class sum의 모든 값을 합쳐야 함 -->
-	</div>
+   <div class="shopping_cart_page">
+      <div class="cart_header">
+         <div class="cart_header_top">
+            <div class="cart_shipping_general">일반배송 1</div>
+            <span>|</span>
+            <div class="cart_shipping_regularly">지정배송</div>
+         </div>
+         <div class="cart_header_bottom">
+            <div class="cart_select_all">
+               <div><label for="chk_all"><input type="checkbox" class="bigCheckbox_page_header" id="chk_all" />전체 선택</label></div>
+            </div>
+         </div>
+      </div>
+      <div class="cart_container_main">
+         <div class="cart_container_sub">
+            <div class="cart_item">
+               <div class="cart_item_header_row">
+                  <div class="cart_item_header_row_title">
+                     <div><span><input type="checkbox" class="bigCheckbox_cart" name="chk_all" /></span><span class="shop_name_container">PETCHUSHOP</span></div>
+                  </div>
+                  <span class="material-symbols-outlined">
+                  home
+                  </span>
+               </div>
+               <div class="cart_item_content_row_itemCard">
+                  <div class="chk_box_col0"><input type="checkbox" class="bigCheckbox_item" name="chk_all" /></div>
+                  <div class="content_col1_title">
+                     <div class="col1_title_row1"></div>
+                     <div class="col1_title_row2_img_and_content">
+                        <img src="https://via.placeholder.com/97x97/fbeaac" alt='item_img'>
+                        <div class="col1_title_row2_content_container">
+                           <div class="col1_title_row2_content_title ellipsis2lines">포피갤러리 콤피 베이직 슬리브스 M-L강아지나시티 3컬러 포피갤러리 콤피 베이직 슬리브스 M-L강아지나시티 3컬러 포피갤러리 콤피 베이직 슬리브스 M-L강아지나시티 3컬러</div>
+                           <div class="col1_title_row2_content_price">16,000 원</div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="content_col2_quantity">
+                     <div class="cart_update_container">
+                        <div class="extra_info">추가 정보</div>
+                        <br />
+                        <div><button class="cart_update">주문수정</button></div>
+                     </div>
+                  </div>
+                  <div class="content_col3_subtotal_container">
+                     <div class="content_col3_subtotal_label">상품금액</div>
+                     <div class="content_col3_subtotal_amount">32,000원</div>
+                     <div><button class="cart_paynow">주문하기</button></div>
+                  </div>
+                  <div class="content_col4_deliveryFee_container">
+                     <div class="content_col3_subtotal_label">배송비</div>
+                     <div class="content_col4_deliveryFee_amount">3,000원</div>
+                     <div class="content_col4_deliveryFee_message">(8만원 이상 구매 시 배송비 무료)</div>
+                  </div>
+               </div>
+               <div class="cart_item_footer">
+                  <div class="cart_item_footer_inner">
+                     <div class="cart_item_footer_col1_subtotal">
+                        <div class="cart_footer_col_label">선택상품금액</div>
+                        <div class="cart_footer_col_label_total"><span>40,000,00000000</span><span>원</span></div>
+                     </div>
+                     <span class="material-symbols-outlined math">
+                     add
+                     </span>
+                     <div class="cart_item_footer_col2_delivery">
+                        <div class="cart_footer_col_label">총 배송비</div>
+                        <div class="cart_footer_col_label_deliveryfee">3,000원</div>
+                     </div>
+                     <span class="material-symbols-outlined math">
+                     remove
+                     </span>
+                     <div class="cart_item_footer_col3_discount_amount">
+                        <div class="cart_footer_col_label">할인예상금액</div>
+                        <div class="cart_footer_col_label_total">8,000원</div>
+                     </div>
+                     <div class="cart_footer_col4_subtotal">
+                        <span class="cart_footer_col_label">주문금액</span>
+                        <span class="cart_footer_col_label_subtotal">500,000,000원</span>
+                     </div>
+                  </div>
+                  <span><a href="#" class="payment_submit">PETCHUSHOP 주문하기</a></span>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="page_bottom_half">
+         <div class="page_bottom_total_price">
+            <div class="page_bottom_total_price_row1">
+               <div class="page_item_footer_inner">
+                  <div class="cart_item_footer_col1_subtotal">
+                     <div class="page_footer_col_label">선택상품금액</div>
+                     <div class="page_footer_col_amount">400,000,000원</div>
+                  </div>
+                  <span class="material-symbols-outlined math">
+                  add
+                  </span>
+                  <div class="cart_item_footer_col2_deliveryfee">
+                     <div class="page_footer_col_label">총 배송비</div>
+                     <div class="page_footer_col_label_deliveryfee">3,000원</div>
+                  </div>
+                  <span class="material-symbols-outlined math">
+                  remove
+                  </span>
+                  <div class="page_footer_col3_discount_amount">
+                     <div class="page_footer_col_label">할인예상금액</div>
+                     <div class="page_footer_col_label_discount">8,000원</div>
+                  </div>
+                  <div class="page_footer_col3_subtotal">
+                     <span class="page_footer_col3_label"> 총 주문금액</span>
+                     <span class="page_footer_col3_label_subtotal">35,000000원</span>          
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="bottom_total_price_row2_payment">
+            <a href="#" class="payment_submit_now">총 1 건 주문하기</a>
+         </div>
+      </div>
+   </div>
 </div>
-
+</body>
 
 <script>
 	var uid = "${id}";

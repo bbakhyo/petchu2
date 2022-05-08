@@ -3,7 +3,7 @@
 
 <mapper namespace="com.example.mapper.PointhistoryMapper">
     <select id="readPH" resultType="com.example.domain.PointhistoryVO">
-        select * from pointhistory where id=#{id} order by regdate desc
+        select * from pointhistory where id=#{id}
     </select>
     <insert id="insertPH">
     	insert into pointhistory(id, amount, content) values (#{id}, #{amount}, #{content})

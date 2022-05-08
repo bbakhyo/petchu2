@@ -44,10 +44,4 @@
 	<select id="typechk" resultType="String">
 		select type from user where id=#{id}
 	</select>
-	<select id="cashRead" resultType="int">
-		select cash from user where id=#{id}
-	</select>
-	<update id="updateCash">
-		update user set cash=cash+#{amount} where id=#{id};
-	</update>
 </mapper>

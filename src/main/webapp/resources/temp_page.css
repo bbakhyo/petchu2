@@ -1005,8 +1005,6 @@ tr {
 	height: 90%;
 	border: 1px solid black;
 	border-radius: 20px;
-	margin-top:10px;
-	margin-bottom:10px;
 }
 
 .cart_item {
@@ -1123,8 +1121,6 @@ tr {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-
-.col1_title_row2_content_price {}
 
 .content_col2_quantity {
 	display: flex;
