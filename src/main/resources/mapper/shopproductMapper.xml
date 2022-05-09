@@ -11,8 +11,12 @@
 	</select>
 	<select id="contents_list" resultType="com.example.domain.shopproductVO">
 		select * from shopproduct
-		where pcate4 like concat('%',#{selectCate},'%') 
+		where pcate4 like concat('%',#{selectCate},'%')		
+		<if test="selectCate2 != null">
 		and pcate3 like concat('%',#{selectCate2},'%')
+		</if>	
+		<if test="selectCate3 != null">
 		and pcate2 like concat('%',#{selectCate3},'%')
+		</if>
 	</select>
 </mapper>

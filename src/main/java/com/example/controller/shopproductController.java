@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -101,7 +102,6 @@ public class shopproductController {
 		return "/home";
 	}
 	
-	//쇼핑몰 메인 페이지
 	@RequestMapping("/main")
 	public String main(Model model){
 		List<shopcartVO> tvo=cartdao.today_best_items();
@@ -110,6 +110,17 @@ public class shopproductController {
 		model.addAttribute("blist", bvo);
 		model.addAttribute("pageName", "shopproduct/main.jsp");
 		return "/home";
+	}
+	//Shopproduct main에서 베스트/오늘의 상품 목록 출력
+	@RequestMapping("/main.json")
+	@ResponseBody
+	public HashMap<String,Object> main_best(){
+		HashMap<String,Object> map=new HashMap<String,Object>();
+		List<shopcartVO> best1=cartdao.best_items();
+		List<shopcartVO> today1=cartdao.today_best_items();
+		map.put("best1", best1);
+		map.put("today1", today1);
+	return map;	
 	}
 	
 	//콘텐츠 리스트 JSON
@@ -120,7 +131,7 @@ public class shopproductController {
 		return list;
 	}
 
-	//카테고리로 필터링 된 상품 목록
+	//필터링된 상품목록
 	@RequestMapping("/contents_list")
 	public String contents_list(Model model, String selectCate, String selectCate2, String selectCate3, HttpSession session){
 		session.setAttribute("cate", selectCate);

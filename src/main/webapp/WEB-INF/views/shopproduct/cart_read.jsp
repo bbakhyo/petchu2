@@ -13,6 +13,9 @@
 	.none{
 		display:none;
 	}
+	.col1_title_row2_img_and_content img{
+		cursor:pointer;
+	}
    </style>
 </head>
 <body>
@@ -364,7 +367,7 @@
 	
 	//상품 이미지 클릭시 해당 페이지로 이동
 	$("#tbl").on("click", "img", function(){
-		var pno = $(this).parent().parent().find(".chk").attr("pno");
+		var pno = $(this).parent().parent().parent().parent().parent().attr("pno");
 		location.href="/shopproduct/read?pno="+pno;
 	});
 	
