@@ -37,7 +37,7 @@
 	<c:if test="${type=='일반'}">
 		<p id="requestMenu"><a href="#">서비스 요청서 관리</a></p>
 		<div id="requestside" style="display: none;">
-			<p><a href="#"> · 내가 작성한 요청서</a></p>
+			<p><a href="/user/myRequest"> · 내가 작성한 요청서</a></p>
 			<p><a href="#"> · 마감처리한 요청서</a></p>
 		</div>
 	</c:if>

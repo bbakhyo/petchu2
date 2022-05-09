@@ -25,8 +25,11 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.example.dao.BeautyDAO;
 import com.example.dao.CashhistoryDAO;
+import com.example.dao.CleaningDAO;
 import com.example.dao.DoctorDAO;
+import com.example.dao.LessonDAO;
 import com.example.dao.PetDAO;
 import com.example.dao.PointhistoryDAO;
 import com.example.dao.UserDAO;
@@ -49,6 +52,15 @@ public class UserController {
 
 	@Autowired
 	PetDAO pdao;
+	
+	@Autowired
+	BeautyDAO bdao;
+	
+	@Autowired
+	CleaningDAO cdao;
+	
+	@Autowired
+	LessonDAO ldao;
 	
 	@Resource(name = "uploadPath")
 	String path;
@@ -330,6 +342,11 @@ public class UserController {
 		return "/home";
 	}
 	
-
-	
+	//서비스 요청서 관리
+	@RequestMapping(value="/myRequest")
+	public String myRequest(Model model, HttpSession session){
+		model.addAttribute("sideMenu", "mypageSidemenu.jsp");
+		model.addAttribute("pageName", "myRequest/Request.jsp");
+		return "/home";
+	}
 }
