@@ -38,6 +38,9 @@
 	[type="radio"] {
     	display: none;
 	}
+	.category3{
+		margin-bottom: 20px;
+	}
 </style>    
 <h1>카테고리 테스트</h1>
 <div id="categoryBody">
@@ -251,7 +254,8 @@
         //라디오 버튼 값을 가져온다.
         cate3val = this.value;
         $(".category1").attr("class", "category1");
-		$(".category_list2").attr("style", "display:none");          
+		$(".category_list2").attr("style", "display:none");       
+		$("input[name='item_type']:radio").prop("checked",false);;
 	});
 	
 	$("input[name='item_type']:radio").change(function () {

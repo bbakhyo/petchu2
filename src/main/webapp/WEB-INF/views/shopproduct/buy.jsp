@@ -3,6 +3,8 @@
 <head>
 <style>
 	.cart_item_img img {width:90px; height:90px;}
+	.checkout_delivery_address, .terms_wrapper{text-align:left;}
+	
 </style>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="/resources/checkout_page.css" rel="stylesheet">
@@ -452,7 +454,6 @@
 	}
 	
 	//전화번호 포멧//////////////여기부터 시작!!!!!!!!!!!!!!!!!! 멀티바이도 수정해야함
-	
 	var num = $(".buyer_phone").html();
 	var formatNum = '';
 	 if(num.length==11){

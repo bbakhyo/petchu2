@@ -74,17 +74,16 @@
 							<input type="button" class="quantity-chg" id="quantity-chg" value="수량변경" 
 							onclick='getSelect(this)'>
 						</a>
-						개
                      </div>
                   </div>
                   <div class="content_col3_subtotal_container">
                      <div class="content_col3_subtotal_label">상품금액</div>
-                     <div class="content_col3_subtotal_amount">{{sum}}원</div>
+                     <div><span class="content_col3_subtotal_amount">{{sum}}</span>원</div>
                      <div><button class="cart_paynow">주문하기</button></div>
                   </div>
                   <div class="content_col4_deliveryFee_container">
-                     <div class="content_col3_subtotal_label">배송비</div>
-                     <div class="content_col4_deliveryFee_amount">3,000원</div>
+                     <div class="content_col3_subtotal_label">적립예정금</div>
+                     <div class="content_col4_deliveryFee_amount"><span class="reserves"></span>원</div>
                      <div class="content_col4_deliveryFee_message">(8만원 이상 구매 시 배송비 무료)</div>
                   </div>
                </div>
@@ -156,16 +155,16 @@
 			$(".bigCheckbox_item").each(function(){
 				var sum = $(this).parent().parent().parent().parent().attr("sum");
 				i = i + Number(sum);
-				
 				$(this).attr("chk", 0);
 			})
 			$(".page_footer_col_amount").html(i+"원");
 			$(".page_footer_col_amount").attr("final_price", i);
 			i = 0;
+			$("#tbl").click();
 		}
 		getCount();
 		chk_update();
-		
+		getFormatNum2();
 	});
 
 	//tbl 내부에 있는 chk값이 변경될 경우 chk: 0 or 1 업데이트
@@ -201,7 +200,9 @@
 	
 	//최종 금액 갱신
 	//최종 구매수량 갱신
+	//적립 예정금 갱신
 	var i = 0;
+	var r = 0;
 	$("#tbl").on("click", function(){
 		checked = 0;
 		chk_all = $(".bigCheckbox_item").length;
@@ -212,11 +213,10 @@
 		})
 		$(".checked_item").html(checked);
 		$(".item_total").html(chk_all);
-		$(".page_footer_col_amount").html(i+"원");
 		$(".page_footer_col_amount").attr("final_price", i);
 		i = 0;
-		
 		chkCount();
+		getFormatNum2();
 	});
 	
 	
@@ -270,8 +270,8 @@
 					var price = $(this).parent().parent().parent().parent().parent().attr("price");
 					var vsum = Number(amount) * Number(price);
 					var sum = $(this).parent().parent().parent().find(".content_col3_subtotal_container .content_col3_subtotal_amount");
-					sum.html(vsum +" 원");
 					sum.attr("price", vsum)
+					sum.html(vsum);
 				});
 
 				//페이지 입장시 자동 체크된 항목들의 값을 계산하여 최종 금액 출력
@@ -312,6 +312,9 @@
 				$(".item_total").html(chk_all);
 				
 			 	chkCount();
+			 	getReserve();
+			 	getFormatNum1();
+			 	getFormatNum2();
 			}
 		});
 		
@@ -334,9 +337,10 @@
 		var price = $(this).parent().parent().parent().parent().parent().attr("price");
 		var vsum = Number(selected) * Number(price);
 		var sum = $(this).parent().parent().parent().find(".content_col3_subtotal_container .content_col3_subtotal_amount");
-		sum.html(vsum +" 원");
+		sum.html(vsum);
 		sum.attr("price", vsum);
-//뭔가가 바뀔 때마다 price 업데이트 이후 최종가격 갱신해야함
+		getReserve();
+		getFormatNum1();
 
 		//DB에 수량 업데이트
 		var amount = $(this).attr("data_quantity");
@@ -390,7 +394,7 @@
 		$(e).parent().parent().attr("amount", amount);
 		//가격에 가격 업데이트 --- 제대로 안됨@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		var final_price = Number(price) * Number(amount)
-		$(e).parent().parent().parent().parent().find(".content_col3_subtotal_container .content_col3_subtotal_amount").html(final_price + " 원");
+		$(e).parent().parent().parent().parent().find(".content_col3_subtotal_container .content_col3_subtotal_amount").html(final_price);
 		$(e).parent().parent().parent().parent().find(".content_col3_subtotal_container .content_col3_subtotal_amount").attr("price", final_price);
 		//DB에 수량 업데이트
 		var cno = $(e).parent().parent().parent().parent().parent().parent().attr("cno");
@@ -404,6 +408,8 @@
 // 				alert("업데이트 성공")
 			}
 		});
+		getReserve();	
+		getFormatNum1();
 	}
 
 	function getCount(){
@@ -445,5 +451,49 @@
 		var chked_all = $('input[class=bigCheckbox_item]:checked').length;
 		$(".payment_submit_now").html("총 "+chked_all+" 건 주문하기");
 	}
+	
+	
+	function getFormatNum1(){
+		//넘버포맷
+	 	$(".col1_title_row2_content_price").each(function(){
+	 		var fprice = $(this).html();
+			fprice=fprice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			$(this).html(fprice);
+	 	});
+	 	$(".content_col3_subtotal_amount").each(function(){
+	 		var fprice = $(this).html();
+			fprice=fprice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			$(this).html(fprice);
+	 	});
+	 	$(".reserves").each(function(){
+	 		var fprice = $(this).html();
+			fprice=fprice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			$(this).html(fprice);
+	 	});
+	}
 
+	function getFormatNum2(){
+		var fprice = $(".page_footer_col_amount").attr("final_price");
+		fprice=fprice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		$(".page_footer_col_amount").html(fprice+"원");
+		
+		var aprice = $(".page_footer_col_amount").attr("final_price");
+		aprice = Number(aprice)+3000;
+		
+		//추가로 할인예정금액 계산해야함 
+		
+		$(".page_footer_col3_label_subtotal").attr("price", aprice);
+		
+		aprice = $(".page_footer_col3_label_subtotal").attr("price");
+		aprice=aprice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		$(".page_footer_col3_label_subtotal").html(aprice+"원");
+	}
+	
+	function getReserve(){
+		$(".content_col3_subtotal_amount").each(function(){
+			var reserve = $(this).attr("price");
+			reserve = Number(reserve)/10;
+			$(this).parent().parent().parent().find(".content_col4_deliveryFee_container .content_col4_deliveryFee_amount .reserves").html(reserve);
+		});
+	}
 </script>

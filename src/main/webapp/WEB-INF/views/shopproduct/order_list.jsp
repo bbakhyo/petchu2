@@ -22,10 +22,22 @@
 		margin: 20px;
 	}
 	.border{
-		border-top:1px solid;
+		border-top:15px solid white;
+		border-left: 2px solid #d8d8d8;
+		border-right: 2px solid #d8d8d8;
+		background: #d8d8d8;
 	}
 	.image{
 		cursor:pointer;
+	}
+	.gray_line {
+		border-top: 2px solid #d8d8d8;
+ 		border-left: 2px solid #d8d8d8; 
+ 		border-right: 2px solid #d8d8d8; 
+		background: #d8d8d8;
+	}
+	.date_td {
+		height:5px;
 	}
 </style>
 <div id="page">
@@ -43,11 +55,10 @@
 			<td rowspan="3"><span class="order_read" bno={{bno}}>주문 상세보기</span></td>
 		</tr>
 		<tr>
-			<td class="price" pprice="{{pprice}}" amount="{{amount}}">가격*수량 값</td>
-		</tr>
-		<tr>
-			<td>{{amount}}개</td>
-		</tr>
+			<td class="price" pprice="{{pprice}}" amount="{{amount}}">가격*수량 값
+			
+			</td>
+			</tr>
 		</tbody>
 		{{/each}}
 	</script>
@@ -112,6 +123,32 @@ function getList() {
 					$(this).html("");
 				}
 			});
+			
+			//가격포맷
+			$(".price").each(function(){
+				var fprice = $(this).html();
+				fprice=fprice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+				$(this).html(fprice);
+			});
+			
+			
+			getTest();//이름 변경해야함
+			
+			//날짜포맷
+			$(".date_td").each(function(){
+				if($(this).attr("date_only")!="date_only") return;
+				var str = $(this).html();
+				var strDate = str.substring(0, 10);
+				strDate = strDate.replace("-", ".");
+				strDate = strDate.replace("-", ".");
+				$(this).html("<h4>" + strDate + " 주문" + "</h4>");
+			});
+			
+			
+// 			//같이 구매한 상품 가격포맷
+// 			getFormatPrice();
+
+			
 		}
 	});
 }
@@ -121,4 +158,16 @@ $("#tbl").on("click", "img", function(){
 	var pno = $(this).parent().parent().parent().attr("pno");
 	location.href="/shopproduct/read?pno="+pno;
 });
+
+
+//만약 class명이 "tbody"라면
+
+function getTest(){
+	$(".tbody").each(function(){
+		if($(this).attr("class")=="tbody"){
+			$(this).attr("class", "tbody gray_line");
+		}
+	});
+}
+
 </script>
