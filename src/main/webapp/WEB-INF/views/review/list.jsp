@@ -74,9 +74,9 @@
 	
 	//insertbutton
 			  $(".button").on("click", ".btn_insert", function(){
-			  	var pno=$(this).closest(".whole").attr("pno");
-			  	var bno=$(this).closest(".whole").attr("bno");
-			  		alert(pno + "+" + bno);
+			  var pno = $(this).closest(".whole").find(".pno").val();
+			  var bno = $(this).closest(".whole").find(".bno").val();
+			  alert(pno + bno);
 		  })
  
 
