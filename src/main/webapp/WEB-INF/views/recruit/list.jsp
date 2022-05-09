@@ -23,19 +23,22 @@
 			
 			
 		<c:forEach items="${list}" var="vo">
-		<tr class="tr1" >
-			<td>${vo.bno}</td>
-			<td>${vo.id}</td>
+		<tr class="tr1"  >
+			<td  onclick="location.href='read?bno=${vo.bno}'">${vo.bno}</td>
+			<td onclick="location.href='read?bno=${vo.bno}'">${vo.id}</td>
 			
-			<td ><fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			<td>${vo.type}</td>
-			<c:if test="${id==vo.id }">
-			<td><input class="contents" type="text" value="${vo.contents}"></td>
-			</c:if>
-			<c:if test="${id!=vo.id }">
-				<td colspan=2>${vo.contents}</td>
-			</c:if>
+			<td  onclick="location.href='read?bno=${vo.bno}'"><fmt:formatDate value="${vo.regdate}" pattern="yyyy-MM-dd HH:mm"/></td>
+			<td onclick="location.href='read?bno=${vo.bno}'">${vo.type}</td>
 			
+			
+		
+		<c:if test="${id==vo.id }">
+			<td ><input type="text" value="${vo.contents}"></td>
+		</c:if>
+		<c:if test="${id!=vo.id }">
+			<td  onclick="location.href='read?bno=${vo.bno}'" colspan=2>${vo.contents}</td>
+		</c:if>
+							
 			<c:if test="${id==vo.id }">
 				<td ><button bno="${vo.bno}" contents="${vo.contents}" class="update">수정</button>
 				<button bno="${vo.bno}" class="delete">삭제</button>
@@ -44,6 +47,7 @@
 		</tr>
 		</c:forEach>
 	</table> 
+	
 </body>
 
 
@@ -69,6 +73,7 @@
 	})
 	 
 	$("#tbl").on("click",".update", function(){
+		var row = $(this).parent();
 		var bno = Number($(this).attr("bno"));
 		var contents = $(".contents").val();
 		if(!confirm("수정하시겠습니까?")) return;
