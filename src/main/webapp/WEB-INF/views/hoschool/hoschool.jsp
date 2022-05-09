@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <style>
+	@font-face {
+    font-family: 'SDSamliphopangche_Basic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Basic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
 	.bigPrame{
 		margin: 0px auto;
 		width: 500px;
@@ -12,7 +18,7 @@
 	}
 	.prame{
 /* 		사용자가 올린 백그라운드 이미지 */
-		background-image: url("https://img.freepik.com/free-photo/a-scottish-straight-cat-on-a-white-background-looking-up-top-view-copy-space-banner_76158-766.jpg?size=626&ext=jpg");
+		text-align: left;
 		background-size: 500px 200px; 
 		width: 600px;
 		height: 160px;
@@ -22,8 +28,10 @@
 		box-shadow: 5px 5px 5px 1px gray;
 	}
 	.scname{
-		font-size: 20px;
-		font-weight: bold;
+		font-family: 'SDSamliphopangche_Basic';
+		font-size: 30px;
+		color: white;
+		
 	}
 	.sctel{
 		float: right;
@@ -128,7 +136,7 @@
 		{{#each list}}
 		<div class= "prame" scno="{{scno}}"> 
 			<span class="scname">{{scname}}</span>
-			<span class="sctel">☎ {{sctel}}</span>
+			<span class="sctel">{{sctel}}</span>
 			<p><div class="sconeline">{{sconeline}}</div></p>
 			<p><div class="rate">별점</div></p>
 			<p><div class="scprice">{{display scprice}}원</div></p>
@@ -144,11 +152,11 @@
 	</script>
 </div>
 <script>
-	var date=new Date().toISOString().slice(0, 10);
-	var keyword=$(frm.keyword).val();
-	var sort="";
-	var checkin="";
-	var checkout="";
+	var date = new Date().toISOString().slice(0, 10);
+	var keyword = $(frm.keyword).val();
+	var sort = "";
+	var checkin = "";
+	var checkout = "";
 
 	//체크인 체크아웃 오늘날짜로 설정
 	document.getElementById('checkin').value = new Date().toISOString().substring(0, 10);
@@ -209,8 +217,54 @@
 			data:{keyword:keyword, sort:sort, checkin:checkin, checkout:checkout},
 			success: function(data){
 				console.log(data);
+				
 				var template = Handlebars.compile($("#temp").html());
 				$("#bigPrame").html(template(data));
+				
+				var i = 0;
+				$(".prame").each(function(){
+					var bg=$(".image").html();
+						//백그라운드 이미지 수만큼 반복
+							if(i==0){
+								//$(this).style.backgroundimage="url('/resources/TBN/TBN01.jpg')";
+								$(this).css({"background":"url(/resources/TBN/TBN01.jpg"}); 
+								$(this).css({"background-size":"700px 200px"}); 
+								i++;
+							}else if(i==1){
+								$(this).css({"background":"url(/resources/TBN/TBN04.png"});
+								$(this).css({"background-size":"700px 200px"}); 
+								i++;
+							}else if(i==2){
+								$(this).css({"background":"url(/resources/TBN/TBN05.png"});
+								$(this).css({"background-size":"700px 200px"}); 
+								i++;
+							}else if(i==3){
+								$(this).css({"background":"url(/resources/TBN/TBN06.png"});
+								$(this).css({"background-size":"700px 200px"}); 
+								i=0;
+							}
+						
+							var num = $(this).find(".sctel").html();
+							var formatNum = '';
+							
+						    if(num.length==11){
+						        formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+						    }else if(num.length==8){
+						        formatNum = num.replace(/(\d{4})(\d{4})/, '$1-$2');
+						    }else if(num.indexOf('02')==0){
+						        formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+						    }else if(num.length==12){
+						        formatNum = num.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
+						    }else{
+						        formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+						    }
+						    	$(this).find(".sctel").html(formatNum);
+						    	
+				});
+				
+				
+					
+				
 			}
 		});
 	}
