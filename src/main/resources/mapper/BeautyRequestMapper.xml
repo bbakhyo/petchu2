@@ -17,4 +17,17 @@
    	<select id="beautyRead" resultType="com.example.domain.BeautyRequestVO">
    		select * from beautyrequest where brno=#{brno}
    	</select>
+   	
+   	<select id="myBeautyRead" resultType="com.example.domain.BeautyRequestVO">
+   		select * from beautyrequest where uid=#{uid} and isDelete=0
+   	</select>
+   	
+   	<select id="beautyCount" resultType="int">
+   		select count(*) from beautyrequest where uid=#{uid} and isDelete = 0;
+   	</select>
+   	
+   	<update id="bisDeleteUpdate">
+   		update beautyrequest set isDelete = 1 where brno=#{brno};
+   	</update>
+   	
 </mapper>
