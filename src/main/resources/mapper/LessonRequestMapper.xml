@@ -18,4 +18,16 @@
     <select id="lessonRead" resultType="com.example.domain.LessonRequestVO">
    		select * from lessonrequest where lrno=#{lrno}
    	</select>
+   	
+   	<select id="myLessonRead" resultType="com.example.domain.LessonRequestVO">
+   		select * from lessonrequest where uid=#{uid} and isDelete=0
+   	</select>
+   	
+   	<select id="lessonCount" resultType="int">
+   		select count(*) from lessonrequest where uid=#{uid} and isDelete = 0;
+   	</select>
+   	
+   	<update id="lisDeleteUpdate">
+   		update lessonrequest set isDelete = 1 where lrno=#{lrno};
+   	</update>
 </mapper>
