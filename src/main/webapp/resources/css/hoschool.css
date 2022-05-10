@@ -3,16 +3,17 @@
 .page_hoschool {
 	display: flex;
 	flex-direction: column;
-	flex-basis: 100%;
+	
 	height: auto;
 	
-	/* background-color: pink; */
+	/*  background-color: pink; */
 	font-family: "nanum gothic";
+	
 }
 
 .ho_page_header {
 	text-align: center;
-	min-height: 100vh;
+	min-height: 100px;
 	width: 100%;
 	/* background-color: #e5f6b3; */
 }
