@@ -3,8 +3,6 @@
 <head>
 <style>
 	.cart_item_img img {width:90px; height:90px;}
-	.checkout_delivery_address{text-align:left;}
-	.terms_inside_wrapper{text-align:left;}
 </style>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link href="/resources/checkout_page.css" rel="stylesheet">
@@ -35,7 +33,7 @@
               </div>
               <div class="cartitem_info_right" sum={{sum}} pno={{pno}} amount={{amount}}>
                 <div class="cartitem_title">{{pname}}</div>
-                <div class="cartitem_price" price="{{sum}}"><span class="formatPrice">{{display sum}}</span>원  ({{amount}}개)</div>
+                <div class="cartitem_price" price="{{sum}}"><span class="formatPrice">{{display sum}}</span>원 -- {{amount}}개</div>
 
               </div>
             </div>
@@ -308,7 +306,6 @@ Handlebars.registerHelper("display", function(sum){
 			$("#delivery_addy1").attr("readonly", "readonly");
 			$("#delivery_addy2").val("${vo.address2}");
 			$("#delivery_addy2").attr("readonly", "readonly");
-			getNumberFormat();
 		}//
 	}
 
@@ -394,6 +391,7 @@ Handlebars.registerHelper("display", function(sum){
 				var pname = proname + ' 외 ' + pamount;
 			}
 			
+			alert(pname);
 			var receiver = $("#order_receiver").val();
 			var tel = $("#delivery_contact").val();
 			var delivery_contact = $("#delivery_contact").val();
@@ -477,31 +475,33 @@ Handlebars.registerHelper("display", function(sum){
 		}
 	});
 	
+// 	//가격 포맷
+// 	numberFormat();
+// 	function numberFormat(){
+// 		$(".formatPrice").each(function(){
+// 			var firstPrice = $(this).html();
+// 			alert(firstPrice);
+// 		});
+// 	}
+// 	$( document ).ready(function() {
+// 		$(".formatPrice").each(function(){
+// 			var firstPrice = $(this).html();
+// 			firstPrice=firstPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+// 			$(this).html(firstPrice);
+// 		});
+// 	});
+	
+// 		firstPrice=firstPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+// 		alert(firstPrice);
+// 		$(this).find("span").html(firstPrice);
+		
+		//cartitem_price의 수만큼 반복하여 넣기
+// 		var finalPrice = $(".card_cart_grandtotal_row_right").attr("final_price");
+	
+// 		$(".card_cart_grandtotal_row_right").html(finalPrice+"원");
 
-	//전화번호 포멧//////////////여기부터 시작!!!!!!!!!!!!!!!!!! 멀티바이도 수정해야함
-	
-	
-	
-	function getNumberFormat(){
-		var num = $(".buyer_phone").html();
-		var formatNum = '';
-		 if(num.length==11){
-		     formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-		 }else if(num.length==8){
-		     formatNum = num.replace(/(\d{4})(\d{4})/, '$1-$2');
-		 }else if(num.indexOf('02')==0){
-		     formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
-		 }else{
-		     formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-		 }
-		 $(".buyer_phone").html(formatNum);
-		 $("#delivery_contact").val(formatNum);
-		 $("#delivery_contact").attr("tel", num);
-	}
 	//
 	//동의버튼 번갈아 사용시 작동 안하니 생각 좀 해보기 
 	//
-    //readonly가 앞에 있는 buy 페이지에서는 작동하는데 여기서는 안함
-    
 	
 </script>

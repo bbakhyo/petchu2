@@ -67,18 +67,5 @@ public class UserDAOImpl implements UserDAO {
 		return session.selectOne(namespace + ".typechk", id);
 	}
 
-	@Override
-	public int cashRead(String id) {
-		return session.selectOne(namespace + ".cashRead", id);
-	}
-
-	@Override
-	public void updateCash(int amount, String id) {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("amount", amount);
-		map.put("id", id);
-		session.update(namespace + ".updateCash", map);
-	}
-
 	
 }

@@ -1,1 +1,11 @@
+#Eclipse
 /target/
+.settings/
+.project
+.classpath
+/bin/
+pom.xml
+.DS_Store
+log/
+
+

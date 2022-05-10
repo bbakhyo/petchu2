@@ -61,13 +61,13 @@
 		select p.*
 		from orderlist o, shopproduct p
 		where (odate>(select DATE_ADD(now(), interval -1 day))) and o.pno=p.pno
-        group by pno
 		order by p.sellcount desc
 		limit 10;
 	</select>
 	<select id="best_items" resultType="com.example.domain.shopcartVO">
 		select p.*
-		from shopproduct p
+		from orderlist o, shopproduct p
+		where o.pno=p.pno
 		order by p.sellcount desc
 		limit 10;
 	</select>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <style>
-	#serside, #esside, #requestside{
+	#serside{
 		font-size: 12px; margin-left: 5px;
 	}
 	#petSmallMenu{
@@ -24,21 +24,6 @@
 		<div id="serside" style="display: none;">
 		<p><a href="/hoschool/insert?id=${id }"> · 내 업체 등록</a></p>
 		<p><a href="/hoschool/myList?id=${id }"> · 내 업체 목록</a></p>
-		</div>
-	</c:if>
-	<c:if test="${type=='업체'}">
-		<p id="estimateMenu"><a href="#">견적서 관리</a></p>
-		<div id="esside" style="display: none;">
-			<p><a href="/service/beslist"> · 미용</a></p>
-			<p><a href="/service/ceslist"> · 홈 클리닝</a></p>
-			<p><a href="/service/leslist"> · 레슨</a></p>
-		</div>
-	</c:if>
-	<c:if test="${type=='일반'}">
-		<p id="requestMenu"><a href="#">서비스 요청서 관리</a></p>
-		<div id="requestside" style="display: none;">
-			<p><a href="/user/myRequest"> · 내가 작성한 요청서</a></p>
-			<p><a href="#"> · 마감처리한 요청서</a></p>
 		</div>
 	</c:if>
 	<p><a href="#">구매내역</a></p>
@@ -76,20 +61,4 @@ $("#petMiddleMenu").on("click", function(){
 			$("#serside").hide();
 		}
 	})
-	
-	$("#estimateMenu").on("click", function(){
-		if($("#esside").css("display") == "none"){
-			$("#esside").show();
-		}else {
-			$("#esside").hide();
-		}
-	});
-	
-	$("#requestMenu").on("click", function(){
-		if($("#requestside").css("display") == "none"){
-			$("#requestside").show();
-		}else {
-			$("#requestside").hide();
-		}
-	});
 </script>

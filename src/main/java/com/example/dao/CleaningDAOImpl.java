@@ -32,20 +32,4 @@ public class CleaningDAOImpl implements CleaningDAO{
 		return session.selectOne(namespace + ".cleanRead", crno);
 	}
 
-	@Override
-	public CleaningRequestVO myCleanRead(String uid) {
-		return session.selectOne(namespace + ".mycleaningRead", uid);
-	}
-
-	@Override
-	public int cleaningCount(String uid) {
-		return session.selectOne(namespace + ".cleaningCount", uid);
-	}
-
-	@Override
-	public void cisDeleteUpdate(int crno) {
-		session.update(namespace + ".cisDeleteUpdate", crno);
-		
-	}
-
 }

@@ -31,12 +31,7 @@ public class RecruitController {
 	public void delete(int bno){
 		dao.delete(bno);
 	}
-	@RequestMapping("/read")
-	public String read(Model model, int bno){
-		model.addAttribute("vo", dao.read(bno));
-		model.addAttribute("pageName", "recruit/read.jsp");
-		return "/home";
-	}
+	
 	//insert
 	@RequestMapping(value="/insert",method=RequestMethod.POST)
 	public String insertPost(RecruitVO vo){

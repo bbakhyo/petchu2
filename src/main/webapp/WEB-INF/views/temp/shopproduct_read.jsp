@@ -1,74 +1,63 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> <%@ taglib
-    uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <link href="/resources/temp_page.css" rel="stylesheet" />
-    <script
-      data-require="jquery@3.1.1"
-      data-semver="3.1.1"
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"
-    ></script>
-  </head>
-  <body>
-   <div id="shopproduct_read_page">
+<head>
+<meta charset="UTF-8">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link href="/resources/temp_page.css" rel="stylesheet">
+<script data-require="jquery@3.1.1" data-semver="3.1.1"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="style.css" />
+<script src="script.js"></script>
+<title>상품정보 페이지</title>
+</head>
+
+<body>
+<div id="shopproduct_read_page">
    <div class="shopproduct_read_container_wrapper">
-     
-     <div class="shopproduct_img_container">
-         <img
-            id="image"
-            src="{vo.pimage}"
-            width="490"
-            alt="https://via.placeholder.com/490x490/81d5b5"
-            />
+      <div class="shopproduct_img_container">
+         <img id="image"
+				src="/display?fileName=${vo.pimage}" width=490 alt="https://via.placeholder.com/490x490/81d5b5">
       </div>
-      <div class="loupe"></div>
-      
       <div class="shopproduct_info_container">
-       
-         <div class="info_container_header_container_bottom">
-            <div class="info_container_header_left_wrapper">
+         <div class="info_container_product_brand">
+            <h2 class="pbrand">Brand Name</h2>
+            <div class="info_container_header_container">
                <div class="info_container_header_left">
-                  <div class="pbrand">${vo.pbrand}</div>
-                  <div class="pname">${vo.pname}</div>
+                  <h2 class="ptitle">Product Title</h2>
+               </div>
+               <div class="info_container_header_right">
+                  <img src="https://via.placeholder.com/40x40/f49090">
+                  <img src="https://via.placeholder.com/40x40/f49090">
                </div>
             </div>
-            <div class="info_container_header_right">
-<!--                <img src="/resources/shopproduct_save.png" alt='save button'>
-               <img src="/resources/shopproduct_share.png" alt='share button'> -->
+            <div class="info_container_header_space"></div>
+            <div class="info_price_container">
+               <div class="price_container_price_value">700,000원</div>
+               <div class="price_container_quantity_value">품절 임박(2개 남음)</div>
             </div>
-         </div>
-         <div class="info_container_ratingbar_space">*****(ratingbar) </div>
-         <div class="info_price_container">
-            <div class="price_container_price_value">
-               <fmt:formatNumber value="${vo.pprice}" pattern="#,###원" />
-            </div>
-            <div class="price_container_quantity_value">품절 임박(2개 남음)</div>
          </div>
          <div class="info_shippingInfo_container">
             <div class="shipping_fee_line"><em>무료배송</em></div>
             <div class="shipping_date_line"><em>내일(일요일) 도착 보장</em></div>
          </div>
          <div class="info_extra_info_container1">
-            <div class="info_line1">
-               <div>최종가격: <span class="final_price"></span>원</div>
+            <div class="info_line1"> 모델명:
             </div>
-            <div class="info_line2"> 
+            <div class="info_line2"> 상세정보:
             </div>
-            <!--             <div class="info_extra_info_container2">
+            <div class="info_extra_info_container2">
                <div class="info_coupon_points">
                   <div>캐시적립 혜택 </div>
                   최대 35,750원 적립
                </div>
                <div class=""></div>
-               </div> -->
+            </div>
             <div class="info_payment_container3">
                <div class="info_payment_container_row1">
                   <div class="quantity buttons_added">
-                     <input type="button" value="-" class="minus"><input type="number" step="1" min="0" max="1000" name="quantity" value="0" title="Qty" class="input-text qty text"><input type="button" value="+" class="plus">
+                     <input type="button" value="-" class="minus"><input type="number" step="1" min="0" max="1000" name="quantity" value="0" title="Qty" class="input-text qty text" size="4"><input type="button" value="+" class="plus">
                   </div>
                   <div class="payment_buttons">
                      <div><a href="#" class="cart_add">장바구니 담기</a></div>
@@ -283,145 +272,117 @@ pageEncoding="UTF-8"%>
       </div>
    </div>
 </div>
-  </body>
+</body>
 
-  <script>
-    var cate1 = "${cate}";
-    var cate2 = "${cate2}";
-    var cate3 = "${cate3}";
-    $(".backcontents").on("click", function(){
-    	location.href="/shopproduct/contents_list?selectCate=" +cate1 + "&selectCate2=" + cate2 + "&selectCate3=" + cate3;
-    });
-    //장바구니 버튼을 클릭한 경우 session에 저장된 id를 읽어서 장바구니DB에 등록
-    $(".cart_add").on("click", function(){
-    	var pno = ${vo.pno}; // 상품번호
-    	var uid = "${id}";
-    	var amount = $(".input-text").html();	//구매자가 정한 수량
-    	//alert(pno+"\n"+uid+"\n"+amount);
+<script>
+	var cate1 = "${cate}";
+	var cate2 = "${cate2}";
+	var cate3 = "${cate3}";
 
-    	$.ajax({
-    		type: "post",
-    		url: "/shopproduct/insert",
-    		data: {pno:pno, uid:uid, amount:amount},
-    		success: function(data){
-    				//장바구니 페이지로 이동하기
-    				if(data==1){
-    					//장바구니 등록 완료
-    					if(!confirm("장바구니로 이동하시겠습니까?")) return;
-    					location.href="/shopproduct/cart_read?uid="+uid;
-    				}else{
-    					alert('이미 장바구니에 등록된 상품입니다.');
-    				}
+	$(".backcontents").on("click", function(){
+		location.href="/shopproduct/contents_list?selectCate=" +cate1 + "&selectCate2=" + cate2 + "&selectCate3=" + cate3;
+	});
 
-    		}
-    	});
-    });
-    //상품구매 클릭시 상품수량과 기본가격을 가지고 넘어감
-    $(".buy_now").on("click", function(){
-    	var pno = ${vo.pno}; // 상품번호
-    	var amount = $(".input-text").html();	//구매자가 정한 수량
-    	location.href="/shopproduct/buy?pno="+pno+"&amount="+amount+"&uid=${id}";
+	//장바구니 버튼을 클릭한 경우 session에 저장된 id를 읽어서 장바구니DB에 등록
+	$(".cart_insert_btn").on("click", function(){
+		var pno = ${vo.pno}; // 상품번호
+		var uid = "${id}";
+		var amount = $(".final_count").html();	//구매자가 정한 수량
+		//alert(pno+"\n"+uid+"\n"+amount);
+		
+		$.ajax({
+			type: "post",
+			url: "/shopproduct/insert",
+			data: {pno:pno, uid:uid, amount:amount},
+			success: function(data){
+					//장바구니 페이지로 이동하기
+					if(data==1){
+						//장바구니 등록 완료
+						if(!confirm("장바구니로 이동하시겠습니까?")) return;
+						location.href="/shopproduct/cart_read?uid="+uid;
+					}else{
+						alert('이미 장바구니에 등록된 상품입니다.');
+					}
+				
+			}
+		});
+	});
+
+	//상품구매 클릭시 상품수량과 기본가격을 가지고 넘어감
+	$(".btnBuy").on("click", function(){
+		var pno = ${vo.pno}; // 상품번호
+		var amount = $(".final_count").html();	//구매자가 정한 수량
+		location.href="/shopproduct/buy?pno="+pno+"&amount="+amount;
+	})
+
+	//감소버튼 누를 경우 구매수량 감소
+	$("#count_button").on("click", ".countDown" , function(){
+		var fcount = $(".final_count").html();
+		if(fcount>1){
+			fcount--;
+			$(".final_count").html(fcount);
+			var fprice = ${vo.pprice};
+			$(".final_won").html(fcount*fprice);
+		}
+	});
+	//증가버튼 누를 경우 구매수량 증가
+	$("#count_button").on("click", ".countIncrease" , function(){
+		var fcount = $(".final_count").html();
+		fcount++;
+		$(".final_count").html(fcount);
+		var fprice = ${vo.pprice};
+		$(".final_won").html(fcount*fprice);
+	});
+
+</script>
+<script>
+/*상품 수량 버턴  */
+function wcqib_refresh_quantity_increments() {
+    jQuery("div.quantity:not(.buttons_added), td.quantity:not(.buttons_added)").each(function(a, b) {
+        var c = jQuery(b);
+        c.addClass("buttons_added"), c.children().first().before('<input type="button" value="-" class="minus" />'), c.children().last().after('<input type="button" value="+" class="plus" />')
     })
-    //감소버튼 누를 경우 구매수량 감소
-    $(".minus").on("click", function(){
-    	var fcount = $(".input-text").html();
-    	if(fcount<=1)return;
-    	fcount--;
-    	$(".input-text").val(fcount);
-    	$(".input-text").html(fcount);
-    	var fprice = $("vo.pprice");
-    	$(".final_price").html(fcount*fprice);
-    	numberFormat();
-    });
-    //증가버튼 누를 경우 구매수량 증가
-    $(".plus").on("click", function(){
-    	var fcount = $(".input-text").html();
-    	fcount++;
-    	$(".input-text").val(fcount);
-    	$(".input-text").html(fcount);
-    	var fprice = ${vo.pprice};
-    	$(".final_price").html(fcount*fprice);
-    	numberFormat();
-    });
-  </script>
-  <script>
-    /*페이지 텝  */
-    function openPage(pageName, elmnt, color) {
-      // Hide all elements with class="tabcontent" by default */
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-      }
-      // Remove the background color of all tablinks/buttons
-      tablinks = document.getElementsByClassName("tablink");
-      for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.backgroundColor = "";
-      }
-      // Show the specific tab content
-      document.getElementById(pageName).style.display = "block";
-      // Add the specific color to the button used to open the tab content
-      elmnt.style.backgroundColor = color;
-    }
-    // Get the element with id="defaultOpen" and click on it
-    document.getElementById("defaultOpen").click();
-
-    //페이지 입장 후 최종가격 출력
-    var fcount = $(".input-text").html();
-    var fprice = ${vo.pprice};
-    $(".final_price").html(fcount * fprice);
-
-    numberFormat();
-    function numberFormat() {
-      var fprice = $(".final_price").html();
-      fprice = fprice.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      $(".final_price").html(fprice);
-    }
-    
-    /*Magnifier */
-    var $loupe = $(".loupe"),
-    loupeWidth = $loupe.width(),
-    loupeHeight = $loupe.height();
-
-$(document).on("mouseenter", ".image", function (e) {
-    var $currImage = $(this),
-        $img = $('<img/>')
-        .attr('src', $('img', this).attr("src"))
-        .css({ 'width': $currImage.width() * 2, 'height': $currImage.height() * 2 });
-
-    $loupe.html($img).fadeIn(100);
-    
-    $(document).on("mousemove",moveHandler);
-                   
-    function moveHandler(e) {
-        var imageOffset = $currImage.offset(),
-            fx = imageOffset.left - loupeWidth / 2,
-            fy = imageOffset.top - loupeHeight / 2,
-            fh = imageOffset.top + $currImage.height() + loupeHeight / 2,
-            fw = imageOffset.left + $currImage.width() + loupeWidth / 2;
-        
-        $loupe.css({
-            'left': e.pageX - 75,
-            'top': e.pageY - 75
-        });
-
-        var loupeOffset = $loupe.offset(),
-            lx = loupeOffset.left,
-            ly = loupeOffset.top,
-            lw = lx + loupeWidth,
-            lh = ly + loupeHeight,
-            bigy = (ly - loupeHeight / 4 - fy) * 2,
-            bigx = (lx - loupeWidth / 4 - fx) * 2;
-
-        $img.css({ 'left': -bigx, 'top': -bigy });
-
-        if (lx < fx || lh > fh || ly < fy || lw > fw) {
-            $img.remove();
-            $(document).off("mousemove",moveHandler);
-            $loupe.fadeOut(100);
-        }
-    }
+}
+String.prototype.getDecimals || (String.prototype.getDecimals = function() {
+    var a = this,
+        b = ("" + a).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+    return b ? Math.max(0, (b[1] ? b[1].length : 0) - (b[2] ? +b[2] : 0)) : 0
+}), jQuery(document).ready(function() {
+    wcqib_refresh_quantity_increments()
+}), jQuery(document).on("updated_wc_div", function() {
+    wcqib_refresh_quantity_increments()
+}), jQuery(document).on("click", ".plus, .minus", function() {
+    var a = jQuery(this).closest(".quantity").find(".qty"),
+        b = parseFloat(a.val()),
+        c = parseFloat(a.attr("max")),
+        d = parseFloat(a.attr("min")),
+        e = a.attr("step");
+    b && "" !== b && "NaN" !== b || (b = 0), "" !== c && "NaN" !== c || (c = ""), "" !== d && "NaN" !== d || (d = 0), "any" !== e && "" !== e && void 0 !== e && "NaN" !== parseFloat(e) || (e = 1), jQuery(this).is(".plus") ? c && b >= c ? a.val(c) : a.val((b + parseFloat(e)).toFixed(e.getDecimals())) : d && b <= d ? a.val(d) : b > 0 && a.val((b - parseFloat(e)).toFixed(e.getDecimals())), a.trigger("change")
 });
 
-  </script>
+/*페이지 텝  */
+function openPage(pageName, elmnt, color) {
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
+
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
 </html>

@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
-
 <style>
 	
 	#popup01{
@@ -18,8 +17,9 @@
 	background-color: #fff;
 	z-index: 2;
 	padding: 20px 100px;
+
 	border-radius: 30px;
-	}
+	    }
 	.backon{
 	    content: "";
 	    width: 100%;
@@ -94,25 +94,23 @@
    }
 
 </style>
-
 <div id="page">
    <h1>호텔/유치원 상세보기</h1>
    <form name="frm">
       <!-- 백그라운드 이미지 -->
       <div id="topArea">
          <div id="topimg">
-            <img src = "/display?fileName=${vo.bgimage}" width=960 height=400>
+            <img class="lazy align" data-original="//image.goodchoice.kr/resize_1000X500x0/affiliate/2020/04/17/5e994464f3d0d.jpg" src="//image.goodchoice.kr/resize_900X500x0/affiliate/2020/04/17/5e994464f3d0d.jpg"  style="margin-top: -238.5px; display: block;">
          </div>
          <!-- 업체 이미지 -->
          <div id="imgArea">
-            <img src = "/display?fileName=${vo.scimage}" width=450 height=500>
+            <img src="//image.goodchoice.kr/resize_450x500/affiliate/2017/07/04/595b4f6cec59f.jpg">
          </div>
          <!-- 업체 요약설명 -->
          <div id="titleArea">
             <h2>${vo.scname }</h2>
             <p>전화: <span class="tel">${vo.sctel}</span></p>
             <p>위치: ${vo.scaddress1}</p>
-            <p>최저가격: <span class = "price">${vo.scprice }</span></p>
             <p>별점: ★★★★☆</p>
             <p>
                <c:if test="${vo.sconeline != ''}">
@@ -184,7 +182,6 @@
 		</div>
 		<div id="button">
 			<button id="btnReserve">예약하기</button>
-			 <button onclick="payAPI()">결제하기</button>
 		</div>
 		<div id="btnClose">
 			<button class="close">종료</button>
@@ -192,46 +189,8 @@
 	</div>
 
 <script>
-
-	//PG사 결제API
-	function payAPI(){
-		IMP.init('imp61649606');
-		var userID = "${id}";
-		var userName = $("#userName").val();
-		var userTel = $("#userTel").val();
-		var scPrice = "${vo.scprice}";
-		var email = "${email}";
-		var address = "${address}";
-		var zipcode = "${zipcode}";
-		alert(userName+"/"+userTel+"/"+scPrice+"/"+email+"/"+address+"/"+zipcode);
-		
-		
-		IMP.request_pay({
-		    pg : 'inicis', // version 1.1.0부터 지원.
-		    pay_method : 'card',
-		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : 'Pet-CHU 결제시스템',
-		    amount : scPrice, //판매 가격
-		    buyer_email : email,
-		    buyer_name : userName,
-		    buyer_tel : userTel,
-		    buyer_addr : address,
-		    buyer_postcode : zipcode
-		}, function(rsp) {
-		    if ( rsp.success ) {
-		        var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		    } else {
-		        var msg = '결제에 실패하였습니다.';
-		        msg += '에러내용 : ' + rsp.error_msg;
-		    }
-		    alert(msg);
-		});
-		
-	}
+	
+	
 	
 	//종료버튼을 클릭한 경우
 	$(".close").on("click",function(e){
@@ -288,11 +247,7 @@
     	$("#serviceInfo").find(".num").html(formatNum);
     	$("#titleArea").find(".tel").html(formatNum);
 
-	//가격 천단위 콤마 포멧
-	var price = $("#titleArea").find(".price");
-	var fmtPrice = price.html().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	price.html(fmtPrice+"원");
-	
+
 	//모달팝업 생성
 	$(document).ready(function( $ ){     
     $(".openPopup").on("click", function(event) {  //팝업오픈 버튼 누르면

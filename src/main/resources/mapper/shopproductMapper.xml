@@ -9,6 +9,7 @@
 		select * from shopproduct
 		where pno=#{pno}
 	</select>
+	
 	<select id="contents_list" resultType="com.example.domain.shopproductVO">
 		select * from shopproduct
 		where pcate4 like concat('%',#{selectCate},'%')		

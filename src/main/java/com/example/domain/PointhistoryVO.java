@@ -5,15 +5,7 @@ public class PointhistoryVO{
 	private String id;
 	private int amount;
 	private String content;
-	private String regdate;
 	
-	
-	public String getRegdate() {
-		return regdate;
-	}
-	public void setRegdate(String regdate) {
-		this.regdate = regdate;
-	}
 	public int getPhno() {
 		return phno;
 	}
