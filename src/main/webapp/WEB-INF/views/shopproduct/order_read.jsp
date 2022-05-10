@@ -26,9 +26,6 @@
 	.image{
 		cursor:pointer;
 	}
-	.none{
-		display:none;
-	}
 </style>
 <div id="page">
 	<div style="text-align: center; overflow:hidden;">
@@ -43,13 +40,21 @@
 					<td rowspan="3">
 						<img class="image" class="image" pno="${vo.pno}" src="${vo.pimage}" width=100>
 					</td>
-					<td class="pname" width=600>${vo.pname}</td>
-					<td class="pprice" pprice="${vo.pprice}" amount="${vo.amount}"><span class="final_price" width=89></span>원
+					<td class="pname">${vo.pname}</td>
+					<td class="pprice" pprice="${vo.pprice}" amount="${vo.amount}"><span class="final_price"></span>원
 					</td>
-					<td class="amount td_center" width=60>${vo.amount}개</td>
+					<td class="amount">${vo.amount}개</td>
 				</tr>
 			</tbody>
 		</table>
+<!-- 		<div> -->
+<%-- 			<img class="image" src="${vo.pimage}"> --%>
+<%-- 			<div class="pname">${vo.pname}</div> --%>
+<%-- 			<div class="pprice" pprice="${vo.pprice}" amount="${vo.amount}"> --%>
+<!-- 				<span class="final_price"></span> -->
+<!-- 			</div> -->
+<%-- 			<div class="amount">${vo.amount}개</div> --%>
+<!-- 		</div> -->
 	</div>
 	<table id="tbl"></table>
 			<table class="receiver_info">
@@ -71,7 +76,7 @@
 			</table>
 	<script id="temp" type="text/x-handlebars-template">
 
-		<h5 class="bought_together"><br>같이 구매한 상품</h5>
+		<h5>같이 구매한 상품</h5>
 		{{#each .}}
 		<tbody class="tbody" bno="{{bno}}" orno="{{orno}}">
 			<tr>
@@ -120,21 +125,6 @@ function getList(){
 			var odate = $(".odate").html();
 			odate = odate.substring(0, 9); 
 			$(".odate").html(odate+" 주문");
-			
-			//같이 구매한 상품이 없을 경우
-			var i = 0;
-			$(".tbody").each(function(){
-				i=i+1;
-			});
-			if(i==0){
-				$(".bought_together").attr("class", "bought_together none");
-			}
-			//구매상품 가격포맷
-			var fprice = $(".final_price").html();
-			fprice=fprice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-			$(".final_price").html(fprice);
-			//같이 구매한 상품 가격포맷
-			getFormatPrice();
 		}
 	});
 }
@@ -166,16 +156,6 @@ var formatNum = '';
      formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
  }
  $(".tel_number").html(formatNum);
-
-
-
-//가격 포맷
-function getFormatPrice(){
-	$("#tbl .price").each(function(){
-		var fprice = $(this).html();
-		fprice=fprice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-		$(this).html(fprice);
-	});
-}
+    
 
 </script>

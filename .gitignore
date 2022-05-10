@@ -3,9 +3,7 @@
 .settings/
 .project
 .classpath
-site
-bin
-db
+
 pom.xml
 
 #Mac
@@ -15,5 +13,4 @@ pom.xml
 log/
 target/
 pom.xml
-pom.xml
-pom.xml
+

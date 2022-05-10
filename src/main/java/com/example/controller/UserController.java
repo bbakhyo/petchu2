@@ -25,15 +25,10 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.example.dao.BeautyDAO;
-import com.example.dao.CashhistoryDAO;
-import com.example.dao.CleaningDAO;
 import com.example.dao.DoctorDAO;
-import com.example.dao.LessonDAO;
 import com.example.dao.PetDAO;
 import com.example.dao.PointhistoryDAO;
 import com.example.dao.UserDAO;
-import com.example.domain.CashhistoryVO;
 import com.example.domain.DoctorVO;
 import com.example.domain.KakaoProfile;
 import com.example.domain.OAuth_Token;
@@ -52,15 +47,6 @@ public class UserController {
 
 	@Autowired
 	PetDAO pdao;
-	
-	@Autowired
-	BeautyDAO bdao;
-	
-	@Autowired
-	CleaningDAO cdao;
-	
-	@Autowired
-	LessonDAO ldao;
 	
 	@Resource(name = "uploadPath")
 	String path;
@@ -316,61 +302,16 @@ public class UserController {
 		dao.updatePoint(amount, session.getAttribute("id").toString());
 		phdao.insertPH(vo);
 	}
-	
-	@Autowired
-	CashhistoryDAO chdao;
-	
-	@ResponseBody
-	@RequestMapping(value="/updatecash", method=RequestMethod.POST)
-	public void updateCash(int amount, HttpSession session){
-		CashhistoryVO vo = new CashhistoryVO();
-		vo.setId(session.getAttribute("id").toString());
-		vo.setAmount(amount);
-		vo.setContent("캐쉬 충전");
-		dao.updateCash(amount, session.getAttribute("id").toString());
-		chdao.insertCH(vo);
-	}
 
 	
 	@RequestMapping(value="/pointRead")
 	public String pointRead(Model model, HttpSession session){
 		model.addAttribute("point",dao.pointRead(session.getAttribute("id").toString()));
-		model.addAttribute("cash", dao.cashRead(session.getAttribute("id").toString()));
-		model.addAttribute("pointhistory",phdao.readPH(session.getAttribute("id").toString()));
-		model.addAttribute("cashhistory",chdao.readCH(session.getAttribute("id").toString()));
+		model.addAttribute("history",phdao.readPH(session.getAttribute("id").toString()));
 		model.addAttribute("pageName", "user/point.jsp");
 		return "/home";
 	}
 	
-	//서비스 요청서 관리
-	@RequestMapping(value="/myRequest")
-	public String myRequest(Model model, HttpSession session){
-		model.addAttribute("bvo", bdao.myBeautyRead(session.getAttribute("id").toString()));
-		model.addAttribute("cvo", cdao.myCleanRead(session.getAttribute("id").toString()));
-		model.addAttribute("lvo", ldao.myLessonRead(session.getAttribute("id").toString()));
-		model.addAttribute("sideMenu", "mypageSidemenu.jsp");
-		model.addAttribute("pageName", "myRequest/Request.jsp");
-		return "/home";
-	}
+
 	
-	//미용 마감
-	@ResponseBody
-	@RequestMapping(value ="/bisDeleteUpdate", method = RequestMethod.POST)
-	public void bisDeleteUpdate(HttpSession session, Model model, int brno){
-		bdao.bisDeleteUpdate(brno);
-	}
-	
-	//홈 클리닝 마감
-	@ResponseBody
-	@RequestMapping(value ="/cisDeleteUpdate", method = RequestMethod.POST)
-	public void cisDeleteUpdate(HttpSession session, Model model, int crno){
-		cdao.cisDeleteUpdate(crno);
-	}
-	
-	//레슨 마감
-	@ResponseBody
-	@RequestMapping(value ="/lisDeleteUpdate", method = RequestMethod.POST)
-	public void lisDeleteUpdate(HttpSession session, Model model, int lrno){
-		ldao.lisDeleteUpdate(lrno);
-	}
 }

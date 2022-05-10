@@ -57,14 +57,8 @@ public class ServiceController {
 	//Beauty
 	@RequestMapping(value ="/binsert", method = RequestMethod.POST)
 	public String binsert(HttpSession session, Model model, BeautyRequestVO bvo){
-		int count= bdao.beautyCount(session.getAttribute("id").toString());
-		if(count >= 1){
-			model.addAttribute("msg", "이미 작성한 요청서가 있습니다. 마감처리 후 다시 시도해주세요");
-			model.addAttribute("pageName", "service/alert.jsp");
-			return "/home";
-		}else{
-			bdao.beautyInsert(bvo);
-		}
+		bdao.beautyInsert(bvo);
+		
 		return "redirect:request";
 	}
 	
@@ -94,15 +88,8 @@ public class ServiceController {
 	//cleaning
 	@RequestMapping(value ="/cinsert", method = RequestMethod.POST)
 	public String cinsert(HttpSession session, Model model, CleaningRequestVO cvo){
-		int count= cdao.cleaningCount(session.getAttribute("id").toString());
-		if(count >= 1){
-			model.addAttribute("msg", "이미 작성한 요청서가 있습니다. 마감처리 후 다시 시도해주세요");
-			model.addAttribute("pageName", "service/alert.jsp");
-			return "/home";
-		}else{
-			cdao.cleangingInsert(cvo);
-			
-		}
+		System.out.println(cvo.getBuilding_classification() + "\n" + cvo.getUid() + "\n" + cvo.getHope_matters() + "\n" + cvo.getHouse_size() + "\n" + cvo.getWish_date() + "\n" + cvo.getWish_local1() + "\n" + cvo.getWish_local2());
+		cdao.cleangingInsert(cvo);
 		
 		return "redirect:request";
 	}
@@ -131,16 +118,8 @@ public class ServiceController {
 	//lesson
 	@RequestMapping(value ="/linsert", method = RequestMethod.POST)
 	public String cinsert(HttpSession session, Model model, LessonRequestVO lvo){
-		int count= ldao.lessonCount(session.getAttribute("id").toString());
-		if(count >= 1){
-			model.addAttribute("msg", "이미 작성한 요청서가 있습니다. 마감처리 후 다시 시도해주세요");
-			model.addAttribute("pageName", "service/alert.jsp");
-			return "/home";
-		}else{
-			ldao.lessonInsert(lvo);
-			
-		}
-		
+		System.out.println(lvo.toString());
+		ldao.lessonInsert(lvo);
 		return "redirect:request";
 	}
 	

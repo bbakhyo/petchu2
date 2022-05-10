@@ -17,8 +17,9 @@
 	background-color: #fff;
 	z-index: 2;
 	padding: 20px 100px;
+
 	border-radius: 30px;
-	}
+	    }
 	.backon{
 	    content: "";
 	    width: 100%;
@@ -99,11 +100,11 @@
       <!-- 백그라운드 이미지 -->
       <div id="topArea">
          <div id="topimg">
-            <img src = "/display?fileName=${vo.bgimage}" width=960 height=400>
+            <img class="lazy align" data-original="//image.goodchoice.kr/resize_1000X500x0/affiliate/2020/04/17/5e994464f3d0d.jpg" src="//image.goodchoice.kr/resize_900X500x0/affiliate/2020/04/17/5e994464f3d0d.jpg"  style="margin-top: -238.5px; display: block;">
          </div>
          <!-- 업체 이미지 -->
          <div id="imgArea">
-            <img src = "/display?fileName=${vo.scimage}" width=450 height=500>
+            <img src="//image.goodchoice.kr/resize_450x500/affiliate/2017/07/04/595b4f6cec59f.jpg">
          </div>
          <!-- 업체 요약설명 -->
          <div id="titleArea">

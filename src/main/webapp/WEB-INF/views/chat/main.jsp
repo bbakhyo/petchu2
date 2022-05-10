@@ -46,6 +46,3 @@ function getNC(){
 	}
 }
 </script>
-<script>
-	var vo="${vo.message}";
-</script>
