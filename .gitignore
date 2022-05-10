@@ -1,16 +1,11 @@
 #Eclipse
-/target
+/target/
 .settings/
 .project
 .classpath
-
+/bin/
 pom.xml
-
-#Mac
 .DS_Store
-
-#Maven
 log/
-target/
-pom.xml
+
 
