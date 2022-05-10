@@ -101,6 +101,7 @@ public class HoschoolController {
 	
 	@RequestMapping(value="/serviceInsert", method=RequestMethod.POST)
 	public String serviceInsert(ServiceVO vo, MultipartHttpServletRequest multi)throws Exception {
+		
 		System.out.println("............................컨트롤러 넘어옴");
 		MultipartFile file=multi.getFile("file");
 		MultipartFile backfile=multi.getFile("backfile");

@@ -14,4 +14,16 @@
     <select id="cleanRead" resultType="com.example.domain.CleaningRequestVO">
    		select * from cleaningrequest where crno=#{crno}
    	</select>
+   	
+   	<select id="mycleaningRead" resultType="com.example.domain.CleaningRequestVO">
+   		select * from cleaningrequest where uid=#{uid} and isDelete=0
+   	</select>
+   	
+   	<select id="cleaningCount" resultType="int">
+   		select count(*) from cleaningrequest where uid=#{uid} and isDelete = 0;
+   	</select>
+   	
+   	<update id="cisDeleteUpdate">
+   		update cleaningrequest set isDelete = 1 where crno=#{crno};
+   	</update>
 </mapper>

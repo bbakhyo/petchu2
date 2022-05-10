@@ -20,7 +20,6 @@
 .slick-prev:before, .slick-next:before {
 	color: gray;
 }
-
 .category_item {
 	width: 213px;
 	float:left;
@@ -29,11 +28,9 @@
 	line-height: 50px;
 	
 }
-
 .category_box, .category_list {
 	cursor: pointer;
 }
-
 .category_snack, .category_foods, .category_supplies {
 	 display: none;
 }
@@ -50,7 +47,6 @@ display: none;
 .active{
 display: block;
 } 
-
 .category_select {
 	display: flex;
 	justify-content: center;
@@ -62,11 +58,9 @@ display: block;
 	height: 150px;
 	/* border: 1px black solid; */
 }
-
 /* .none_show {
 	display: none;
 } */
-
 .menu_item[type="radio"]+label {
 	display: inline;
 	margin-top: 30px;
@@ -83,7 +77,7 @@ display: block;
 }
 /* 일방적으로 적용되서 주석 처일함.원인 불명 */
 /* 하위 매뉴 아이탬 선택시  */
-.menu_item[type="radio"]:checked+label {
+.checked[type="radio"]:checked+label{
 	background-color: #A7CA37;
 	color: white;
 	width: 100px;
@@ -91,6 +85,9 @@ display: block;
 /* 	 border: 1px solid red; */
 } 
 
+.checked{
+	background:#000000;
+}
 
 /* 매뉴 페이저 : 강아지/고양이  */
 [type="radio"]:checked+label {
@@ -108,7 +105,6 @@ display: block;
 label{
 cursor:inherit;
 }
-
 [type="radio"] {
 	display: none;
 }
@@ -149,20 +145,17 @@ cursor:inherit;
 .row_price {
 	
 }
-
 .pprice {
 	font-size: 14px;
 	font-family: "tahoma";
 	color: red;
 }
-
 .pcontent {
 	font-size: 12px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 }
-
 .name {
 	width: 200px;
 	font-size: 13px;
@@ -170,20 +163,20 @@ cursor:inherit;
 	font-weight: bold;
 }
 /* 슬라이더 출력 공간(AJAX) Today1 */
-.slider-div {
+.slider-div-today {
 	display: flex;
 }
-
+.slider-div-best {
+	display: flex;
+}
 .page {
 	display: flex;
 	flex-direction: column;
 }
-
 ul.sub_menu_cat>li {
 	display: inline-block;
 	float: left;
 }
-
 /* .category2, .categoryBody {
 	position: sticky;
 	top: 0;
@@ -207,7 +200,6 @@ ul.sub_menu_cat>li {
   flex-wrap: wrap;
   margin-bottom: 30px;
 }
-
 .best_item_box{
   display: flex;
   flex-direction: column;
@@ -231,7 +223,6 @@ ul.sub_menu_cat>li {
 /*   border: 1px solid black; */
 }
 /* 상품 사진 위에 고정된 Best 1.. 설정 */
-
 .img_best{
   position: relative;
   top: 0;
@@ -262,7 +253,6 @@ img.best_icon{
   display: flex;
   
 }
-
 /* 배너 규격 */
 .banner_box{
 height: 200px;
@@ -327,12 +317,12 @@ display: flex;
 				
 				<!-- 강아지 선택할 경우 매뉴 나타나기(JS) -->
 				<div class="dog">
-				<input type="radio" name="item_type" value="사료" id="petFoods"
-					class="menu_item"> <label for="petFoods">강아지 사료</label> <input
-					type="radio" name="item_type" value="간식" id="petSnack"
-					class="menu_item"> <label for="petSnack">간식</label> <input
-					type="radio" name="item_type" value="용품" id="petSupplies"
-					class="menu_item"> <label for="petSupplies">용품</label>
+				<input type="radio" name="item_type" value="사료" id="petFoods2"
+					class="menu_item menu_item2"> <label class = "label" for="petFoods2">강아지 사료</label> <input
+					type="radio" name="item_type" value="간식" id="petSnack2"
+					class="menu_item menu_item2"> <label class = "label" for="petSnack2">간식</label> <input
+					type="radio" name="item_type" value="용품" id="petSupplies2"
+					class="menu_item menu_item2"> <label class = "label" for="petSupplies2">용품</label>
 				</div>
 			</div>
 			
@@ -377,7 +367,6 @@ display: flex;
 						<li class="category_item">
 							<div class="category_box">테스트 카테고리12</div>
 						</li>
-
 						<li class="category_item">
 							<div class="category_box">테스트 카테고리13</div>
 						</li>
@@ -429,7 +418,6 @@ display: flex;
 						<li class="category_item">
 							<div class="category_box">테스트 간식 카테고리12</div>
 						</li>
-
 						<li class="category_item">
 							<div class="cate<!-- gory_box">테스트 간식 카테고리13</d -->iv>
 						</li>
@@ -480,7 +468,6 @@ display: flex;
 						<li class="category_item">
 							<div class="category_box">테스트 용품 카테고리12</div>
 						</li>
-
 						<li class="category_item">
 							<div class="category_box">테스트 용품 카테고리13</div>
 						</li>
@@ -571,16 +558,16 @@ display: flex;
 		<!--특가 상품  -->
 		<div class="slider_component">
 			<div style="text-align:center;">
-				<h1>특가 상품</h1>
+				<h1>best 상품</h1>
 			</div>
 			<div
 				style="padding: 50px 0px; width: 1000x; height: 270px; background-color: white;">
 				
 				<!-- AJAX -->
-				<div class="slick-slider"></div>
+				<div class="slick-slider-best"></div>
 				<script id="temp" type="text/x-handlebars-template">
 				{{#each best1}}
-					<div class="slider_item_card">
+					<div class="slider_item_card" pno={{pno}} onclick='locationPno(this)'>
 						<div class="item_img">
 							<img src="{{pimage}}" alt="img" width=180>
 						</div>
@@ -606,10 +593,10 @@ display: flex;
 				style="padding: 50px 0px; width: 1000x; height: 270px; background-color: white;">
 				
 				<!-- AJAX -->
-				<div class="slick-slider"></div>
-				<script id="temp" type="text/x-handlebars-template">
-				{{#each today}}
-					<div class="slider_item_card">
+				<div class="slick-slider-today"></div>
+				<script id="temp2" type="text/x-handlebars-template">
+				{{#each today1}}
+					<div class="slider_item_card" pno={{pno}} onclick='locationPno(this)'>
 						<div class="item_img">
 					<img src="{{pimage}}" alt="img" width=180>
 					</div>
@@ -633,8 +620,23 @@ display: flex;
 </body>
 
 <script>
-/* Slick Slider */
 /* 오늘의 상품 출력 */
+	
+	getToday();
+	function getToday() {
+		$.ajax({
+			type : "get",
+			url : "/shopproduct/main.json",
+			dataType : "json",
+			success : function(data) {
+				destroyToday();
+				var template = Handlebars.compile($("#temp2").html());
+				$(".slick-slider-today").html(template(data));
+				applyToday()
+			}
+		})
+	}
+/* Best 상품 출력 */
 	getBest();
 	function getBest() {
 		$.ajax({
@@ -644,19 +646,18 @@ display: flex;
 			success : function(data) {
 				destroyBest();
 				var template = Handlebars.compile($("#temp").html());
-				$(".slick-slider").html(template(data));
+				$(".slick-slider-best").html(template(data));
 				applyBest()
 			}
 		})
 	}
-
-	function destroyBest() {
-		if ($('.slick-slider').hasClass('slick-initialized')) {
-			$('.slick-slider').slick('unslick');
+	function destroyToday() {
+		if ($('.slick-slider-today').hasClass('slick-initialized')) {
+			$('.slick-slider-today').slick('unslick');
 		}
 	}
-	function applyBest() {
-		$('.slick-slider')
+	function applyToday() {
+		$('.slick-slider-today')
 				.slick(
 						{
 							slide : 'div', //슬라이드 되어야 할 태그 ex) div, li 
@@ -674,7 +675,47 @@ display: flex;
 							nextArrow : "<button type='button' class='slick-next'>Next</button>", // 다음 화살표 모양 설정
 							dotsClass : "slick-dots", //아래 나오는 페이지네이션(점) css class 지정
 							draggable : true, //드래그 가능 여부 
-
+							// 반응형 웹구현 옵션
+							responsive : [ {
+								breakpoint : 960, //화면 사이즈 960px
+								settings : {
+									slidesToShow : 3
+								}
+							//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+							}, {
+								breakpoint : 768, //화면 사이즈 768px
+								settings : {
+									slidesToShow : 2
+								}
+							//위에 옵션이 디폴트 , 여기에 추가하면 그걸로 변경
+							} ]
+						});
+	}
+	
+	function destroyBest() {
+		if ($('.slick-slider-best').hasClass('slick-initialized')) {
+			$('.slick-slider-best').slick('unslick');
+		}
+	}
+	function applyBest() {
+		$('.slick-slider-best')
+				.slick(
+						{
+							slide : 'div', //슬라이드 되어야 할 태그 ex) div, li 
+							infinite : true, //무한 반복 옵션
+							slidesToShow : 5, // 한 화면에 보여질 컨텐츠 개수
+							slidesToScroll : 5, //스크롤 한번에 움직일 컨텐츠 개수
+							speed : 1000, // 다음 버튼 누르고 다음 화면 뜨는데까지 걸리는 시간(ms)
+							arrows : true, // 옆으로 이동하는 화살표 표시 여부
+							dots : false, // 스크롤바 아래 점으로 페이지네이션 여부
+							autoplay : true, // 자동 스크롤 사용 여부
+							autoplaySpeed : 10000, // 자동 스크롤 시 다음으로 넘어가는데 걸리는 시간 (ms)
+							pauseOnHover : true, // 슬라이드 이동    시 마우스 호버하면 슬라이더 멈추게 설정
+							vertical : false, // 세로 방향 슬라이드 옵션
+							prevArrow : "<button type='button' class='slick-prev'>Previous</button>", // 이전 화살표 모양 설정
+							nextArrow : "<button type='button' class='slick-next'>Next</button>", // 다음 화살표 모양 설정
+							dotsClass : "slick-dots", //아래 나오는 페이지네이션(점) css class 지정
+							draggable : true, //드래그 가능 여부 
 							// 반응형 웹구현 옵션
 							responsive : [ {
 								breakpoint : 960, //화면 사이즈 960px
@@ -704,22 +745,29 @@ display: flex;
 						+ cateval + "&selectCate2=" + cate2val
 						+ "&selectCate3=" + cate3val;
 			});
-
 	//하위 카테고리 display:none;
 	function removeCate_2() {
 		$(".category_foods").hide();
 		$(".category_supplies").hide();
 		$(".category_snack").hide();
 	}
-
-	$("input[name='animal']:radio").change(function() {
-		//라디오 버튼 값을 가져온다.
-		cate3val = this.value;
-		$(".category1").attr("class", "category1");
-		$(".category_list2").attr("style", "display:none");
-	});
+	   $("input[name='animal']:radio").change(function () {
+          //라디오 버튼 값을 가져온다.
+          cate3val = this.value;
+          $(".category1").attr("class", "category1");
+	      $(".category_list2").attr("style", "display:none");       
+	      $("input[name='item_type']:radio").prop("checked",false);;
+	   });
+	   
 
 	$("input[name='item_type']:radio").change(function() {
+		//2번 선택지
+		//체크드가 라벨이 아닌 라디오에서 되기 때문에 라벨에 클래스 style을 주기 어려움. 생각해 볼 것
+		$(".menu_item").attr("class", "menu_item");
+		$(this).attr("class", "menu_item checked");
+		console.log($(this).attr("class"));
+		
+		
 		cate2val = this.value;
 		//value값이 무엇이냐에 따라 다르게 출력  '
 		if (cate2val == '사료') {
@@ -732,8 +780,7 @@ display: flex;
 			removeCate_2();
 			$(".category_supplies").show();
 		}
-	});
-
+	});// 펑션 끝
 	/* 강아지 하위 매뉴 보여주기/숨기기 */
 	$(document).ready(function() {
 		$('.category_select > .category_cat').click(function(e) {
@@ -748,4 +795,10 @@ display: flex;
 			 $('.category1 > .cat').removeClass('active'); 
 		});
 	});
+	
+	//상품 클릭시 해당 페이지로 이동
+	function locationPno(e){
+		var pno = $(e).attr("pno");
+		location.href="/shopproduct/read?pno="+pno;
+	}
 </script>
